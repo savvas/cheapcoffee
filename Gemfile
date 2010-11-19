@@ -6,6 +6,7 @@ gem 'heroku'
 gem 'jquery-rails'
 gem 'devise', :branch=>"v1.2.oauth", :git => "http://github.com/plataformatec/devise.git"
 gem 'oauth2', :git => 'http://github.com/intridea/oauth2.git'
+gem 'devise_openid_authenticatable'
 gem 'geokit-rails3' #https://github.com/jlecour/geokit-rails3
 gem 'hoptoad_notifier'
 
