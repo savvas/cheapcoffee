@@ -1,0 +1,49 @@
+<%= form_for(@cafeteria) do |f| %>
+  <% if @cafeteria.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@cafeteria.errors.count, "error") %> prohibited this cafeteria from being saved:</h2>
+
+      <ul>
+      <% @cafeteria.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :lat %><br />
+    <%= f.text_field :lat %>
+  </div>
+  <div class="field">
+    <%= f.label :ltn %><br />
+    <%= f.text_field :ltn %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :likes %><br />
+    <%= f.text_field :likes %>
+  </div>
+  <div class="field">
+    <%= f.label :pageviews %><br />
+    <%= f.text_field :pageviews %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,17 @@
+<form accept-charset="UTF-8" action="users/sign_in" class="user_new" id="user_new" method="post" style="display: none;">
+  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+</form>
+
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script type="text/javascript"> 
+  window.fbAsyncInit = function() {
+    FB.init({appId: '<%= DeviseFacebookOpenGraph::Facebook::Config.application_id %>', status: true, cookie: true, xfbml: true});
+    FB.Event.subscribe('auth.login', function(response) {
+        $("form#user_new").submit();
+    });
+    FB.Event.subscribe('auth.logout', function(response) {
+        window.location.href = "/users/sign_out"; 
+    });
+  };
+</script> 

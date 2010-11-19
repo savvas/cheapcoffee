@@ -1,0 +1,37 @@
+<h1>Listing cafeterias</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>City</th>
+    <th>Lat</th>
+    <th>Ltn</th>
+    <th>User</th>
+    <th>Likes</th>
+    <th>Pageviews</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cafeterias.each do |cafeteria| %>
+  <tr>
+    <td><%= cafeteria.name %></td>
+    <td><%= cafeteria.address %></td>
+    <td><%= cafeteria.city %></td>
+    <td><%= cafeteria.lat %></td>
+    <td><%= cafeteria.ltn %></td>
+    <td><%= cafeteria.user_id %></td>
+    <td><%= cafeteria.likes %></td>
+    <td><%= cafeteria.pageviews %></td>
+    <td><%= link_to 'Show', cafeteria %></td>
+    <td><%= link_to 'Edit', edit_cafeteria_path(cafeteria) %></td>
+    <td><%= link_to 'Destroy', cafeteria, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cafeteria', new_cafeteria_path %>

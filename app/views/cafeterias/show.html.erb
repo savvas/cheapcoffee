@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @cafeteria.name %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @cafeteria.address %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @cafeteria.city %>
+</p>
+
+<p>
+  <b>Lat:</b>
+  <%= @cafeteria.lat %>
+</p>
+
+<p>
+  <b>Ltn:</b>
+  <%= @cafeteria.ltn %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @cafeteria.user_id %>
+</p>
+
+<p>
+  <b>Likes:</b>
+  <%= @cafeteria.likes %>
+</p>
+
+<p>
+  <b>Pageviews:</b>
+  <%= @cafeteria.pageviews %>
+</p>
+
+
+<%= link_to 'Edit', edit_cafeteria_path(@cafeteria) %> |
+<%= link_to 'Back', cafeterias_path %>

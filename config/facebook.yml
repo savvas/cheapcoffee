@@ -1,0 +1,9 @@
+development:
+  app_id: 26219543388
+  secret: e81f33d042406ccdf144a243d9ad1c25
+test:
+  app_id: YOUR APP ID
+  secret: YOUR SECRET
+production:
+  app_id: 112297728826290
+  secret: 487b04111b65ec493e66ced566fa5207

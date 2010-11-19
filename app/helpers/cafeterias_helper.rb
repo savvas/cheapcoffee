@@ -1,0 +1,2 @@
+module CafeteriasHelper
+end
