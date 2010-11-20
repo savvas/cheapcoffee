@@ -1,7 +1,7 @@
 class CafeteriasController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
   respond_to :html, :xml, :json # class level
-  
+
   # GET /cafeterias
   # GET /cafeterias.xml
   def index
@@ -75,20 +75,58 @@ class CafeteriasController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def approve
     @cafeteria = Cafeteria.find(params[:id])
     @cafeteria.approved = params[:approved]
     @cafeteria.voter_id = current_user.id
-    @cafeteria.save
-    redirect_to @cafeteria, :notice => @cafeteria.errors
+    if @cafeteria.save
+      format.html { redirect_to @cafeteria, :notice => "Thanks!" }
+      format.json { render :text => 1 }
+    else
+      format.html { redirect_to @cafeteria, :error => @cafeteria.errors }
+      format.json { render :text => -1 }
+    end
   end
-  
+
   def blame
-    # Blame price_x for cafeteria_id 
+    # Blame price_x for cafeteria_id
     @cafeteria = Cafeteria.find(params[:id])
-    @price_id = params[:blamed].split("_")[1]
-    @cafeteria.prices.where()
-    
+    @product = params[:blamed]
+    # cache it god damn it
+    @top3 = SuggestedPrice.find_by_sql("SELECT price, COUNT(*) as freq FROM suggested_prices "+
+                                       "WHERE cafeteria_id=#{@cafeteria.id} AND product='#{@product}'" +
+                                       " GROUP BY price ORDER BY freq DESC LIMIT 3")
   end
+
+
+  def search
+    _update_current_user_location!
+
+    # Do the search!
+    if params[:corner_up]
+      @cafeterias = Cafeteria.in_bounds([params[:corner_up], params[:corner_down]], :origin => current_user)
+    else
+      # Search queries
+      range = params[:range].present? ? params[:range].to_i : 2
+      @cafeterias = Cafeteria.within(range, :origin => current_user)
+    end
+    product = "price_1" # change from params
+    @cafeterias = @cafeterias.order("#{product} DESC")
+    respond_with(@cafeterias)
+  end
+
+  def _update_current_user_location!
+    # if there is no session and no params
+    if session[:lat].blank? && params[:lat].blank?
+      current_user.geocode_me!
+    # if we have params from mobile or browser then update
+    elsif !params[:lat].blank?
+      session[:lat], session[:lng] = params[:lat], params[:lng]
+      current_user.lat = session[:lat]
+      current_user.lng = session[:lng]
+    end
+  end
+
 end
+

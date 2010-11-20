@@ -7,15 +7,15 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.trackable
       t.openid_authenticatable
       t.integer :role_mask, :default => 1
-      
+
       # current address
       t.string :current_address
       t.float :lat
-      t.float :ltn
-      
+      t.float :lng
+
       # game
       t.integer :points, :default => 0
-      
+
       # facebook data
       t.string :facebook_link
       t.string :facebook_access_token, :length => 85
@@ -26,15 +26,15 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :friends_uids
       # voted cafeterias (in order not to have duplicate votes)
       t.text :voted_cafeterias_ids
-      
+
       t.string :network, :size => 15, :default => "Facebook"
       # t.confirmable
       # t.lockable :lock_strategy => :failed_attempts, :unlock_strategy => :both
       # t.token_authenticatable
-      
+
       t.timestamps
     end
-    
+
     add_index :users, :facebook_uid, :unique => true
     add_index :users, :email,                :unique => true
     add_index :users, :reset_password_token, :unique => true
@@ -49,3 +49,4 @@ class DeviseCreateUsers < ActiveRecord::Migration
     drop_table :users
   end
 end
+

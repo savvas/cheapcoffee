@@ -1,0 +1,24 @@
+<%= @cafeteria.name %><br />
+
+Most popular:<br />
+<% for suggestion in @top3 %>
+  Price: <%= suggestion.price.to_i %>
+  Freq: <%= suggestion.freq %><br />
+
+  <%= form_for [@cafeteria,SuggestedPrice.new] do |f| %>
+    <%= f.hidden_field :product, :value => @product %>
+    <%= f.hidden_field :cafeteria_id, :value => @cafeteria.id %>
+    <%= f.hidden_field :price, :value => suggestion.price.to_i  %>
+    <%= f.submit %>
+  <% end %>
+
+<% end %>
+
+<%= form_for [@cafeteria,SuggestedPrice.new] do |f| %>
+  <%= f.label COFFEES[@product] %>
+  <%= f.hidden_field :product, :value => @product %>
+  <%= f.hidden_field :cafeteria_id, :value => @cafeteria.id %>
+  <%= f.text_field :price %>
+  <%= f.submit %>
+<% end %>
+

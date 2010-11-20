@@ -46,6 +46,15 @@ class User < ActiveRecord::Base
     self.save
   end
 
+  def geocode_me!
+    loc = Geokit::Geocoders::MultiGeocoder.geocode(self.current_sign_in_ip)
+    if loc
+        self.lat, self.lng = loc.lat, loc.lng
+        self.current_address = "#{loc.street_address}, #{loc.city}"
+        self.save
+    end
+  end
+
 
 end
 

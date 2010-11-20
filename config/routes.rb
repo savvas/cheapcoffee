@@ -32,6 +32,8 @@ Cheapcoffee::Application.routes.draw do
     resources :suggested_prices
   end
 
+  match "/search" => "cafeterias#search", :as => "search"
+
 
 
   # Sample resource route with sub-resources:
