@@ -49,6 +49,21 @@ $(document).ready(function(){
     //On load initialize google maps 
     initializeGMaps();
 
+
+    google.maps.event.addListener(mapObj.map, 'zoom_changed', function() {
+      ne = mapObj.map.getBounds().getNorthEast();
+      sw = mapObj.map.getBounds().getSouthWest();
+      console.log("search again!" +"--" +ne +" -- "+ sw);
+    });
+    
+    google.maps.event.addListener(mapObj.map, 'dragend', function() {
+      ne = mapObj.map.getBounds().getNorthEast();
+      sw = mapObj.map.getBounds().getSouthWest();
+      console.log("search again!" +"-- "+ne +" -- "+ sw);
+    });
+    
+    
+    
     //Toggle 'add cafeteria' form
     $('div.sidebar a.add-button, div.add-coffeeshop a.close').click(function(){
         if ($(this).hasClass('close')){
