@@ -20,15 +20,18 @@ Cheapcoffee::Application.routes.draw do
 
   resources :cafeterias do
     member do
-      post 'confirm'
+      get 'approve'
+      get 'blame'
       post 'check_location'
     end
 
     collection do
       get 'search'
     end
-    resources :prices
+    
+    resources :suggested_prices
   end
+  
 
 
   # Sample resource route with sub-resources:

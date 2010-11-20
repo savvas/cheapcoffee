@@ -1,5 +1,5 @@
 class CafeteriasController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:index, :show]
   respond_to :html, :xml, :json # class level
   
   # GET /cafeterias
@@ -74,5 +74,21 @@ class CafeteriasController < ApplicationController
       format.html { redirect_to(cafeterias_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  def approve
+    @cafeteria = Cafeteria.find(params[:id])
+    @cafeteria.approved = params[:approved]
+    @cafeteria.voter_id = current_user.id
+    @cafeteria.save
+    redirect_to @cafeteria, :notice => @cafeteria.errors
+  end
+  
+  def blame
+    # Blame price_x for cafeteria_id 
+    @cafeteria = Cafeteria.find(params[:id])
+    @price_id = params[:blamed].split("_")[1]
+    @cafeteria.prices.where()
+    
   end
 end

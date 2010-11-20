@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101119220641) do
+ActiveRecord::Schema.define(:version => 20101120134657) do
 
   create_table "cafeterias", :force => true do |t|
     t.string   "name"
@@ -37,10 +37,22 @@ ActiveRecord::Schema.define(:version => 20101119220641) do
     t.datetime "updated_at"
   end
 
+  add_index "cafeterias", ["lat"], :name => "index_cafeterias_on_lat"
+  add_index "cafeterias", ["ltn"], :name => "index_cafeterias_on_ltn"
+  add_index "cafeterias", ["name"], :name => "index_cafeterias_on_name"
+
+  create_table "suggested_prices", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "cafeteria_id"
+    t.string   "product"
+    t.float    "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
-    t.string   "email",                                :default => "", :null => false
-    t.string   "encrypted_password",    :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                        :default => "", :null => false
+    t.string   "email",                                :default => "",         :null => false
+    t.string   "encrypted_password",    :limit => 128, :default => "",         :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -49,23 +61,27 @@ ActiveRecord::Schema.define(:version => 20101119220641) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "facebook_uid",          :limit => 8
     t.string   "identity_url"
-    t.string   "facebook_access_token"
+    t.integer  "role_mask",                            :default => 1
     t.string   "current_address"
     t.float    "lat"
     t.float    "ltn"
     t.integer  "points",                               :default => 0
+    t.string   "facebook_link"
+    t.string   "facebook_access_token"
+    t.integer  "facebook_uid"
     t.string   "name"
-    t.string   "sex"
+    t.string   "gender"
     t.date     "birthday"
     t.text     "friends_uids"
     t.text     "voted_cafeterias_ids"
+    t.string   "network",                              :default => "Facebook"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["facebook_access_token"], :name => "index_users_on_facebook_access_token", :unique => true
   add_index "users", ["facebook_uid"], :name => "index_users_on_facebook_uid", :unique => true
   add_index "users", ["identity_url"], :name => "index_users_on_identity_url", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true

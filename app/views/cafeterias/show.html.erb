@@ -40,7 +40,21 @@
   <%= @cafeteria.pageviews %>
 </p>
 
+<table>
+  <tr>
+    <% COFFEES.keys.each do |key| %>
+      <tr>
+        <td><%= COFFEES[key] %></td>
+        <td><%= @cafeteria.send(key) %></td>
+        <td><%= link_to "Thumbs up", approve_cafeteria_url(@cafeteria, {:approved => key})  %> 
+           (<%= @cafeteria.send("votes_#{key.split('_')[1]}") %>)
+        </td>
+        <td><%= link_to "Blame", blame_cafeteria_url(@cafeteria, {:blamed => key})  %></td>
+      </tr>
+    <% end %>
+  </tr>
+</table>
 
 <%= link_to 'Edit', edit_cafeteria_path(@cafeteria) %> |
 <%= link_to 'Back', cafeterias_path %> |
-<%= link_to "Blame Prices", cafeteria_prices_path(@cafeteria) %>
+<%# link_to "Blame Prices", blame_cafeteria_suggested_prices_path(@cafeteria) %>
