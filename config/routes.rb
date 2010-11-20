@@ -28,10 +28,10 @@ Cheapcoffee::Application.routes.draw do
     collection do
       get 'search'
     end
-    
+
     resources :suggested_prices
   end
-  
+
 
 
   # Sample resource route with sub-resources:
@@ -65,3 +65,4 @@ Cheapcoffee::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 end
+
