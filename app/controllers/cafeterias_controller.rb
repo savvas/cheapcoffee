@@ -1,7 +1,7 @@
 class CafeteriasController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
   respond_to :html, :xml, :json # class level
-  
+
   # GET /cafeterias
   # GET /cafeterias.xml
   def index
@@ -75,20 +75,29 @@ class CafeteriasController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def approve
     @cafeteria = Cafeteria.find(params[:id])
     @cafeteria.approved = params[:approved]
     @cafeteria.voter_id = current_user.id
-    @cafeteria.save
-    redirect_to @cafeteria, :notice => @cafeteria.errors
+    if @cafeteria.save
+      format.html { redirect_to @cafeteria, :notice => "Thanks!" }
+      format.json { render :text => 1 }
+    else
+      format.html { redirect_to @cafeteria, :error => @cafeteria.errors }
+      format.json { render :text => -1 }
+    end
   end
-  
+
   def blame
-    # Blame price_x for cafeteria_id 
+    # Blame price_x for cafeteria_id
     @cafeteria = Cafeteria.find(params[:id])
-    @price_id = params[:blamed].split("_")[1]
-    @cafeteria.prices.where()
-    
+    @product = params[:blamed]
+    # cache it god damn it
+    @top3 = SuggestedPrice.find_by_sql("SELECT price, COUNT(*) as freq FROM suggested_prices "+
+                                       "WHERE cafeteria_id=#{@cafeteria.id} AND product='#{@product}'" +
+                                       " GROUP BY price ORDER BY freq DESC LIMIT 3")
+    puts "--------------------> #{@top3.size}"
   end
 end
+
