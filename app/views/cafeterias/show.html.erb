@@ -21,8 +21,8 @@
 </p>
 
 <p>
-  <b>Ltn:</b>
-  <%= @cafeteria.ltn %>
+  <b>Lng:</b>
+  <%= @cafeteria.lng %>
 </p>
 
 <p>
@@ -30,15 +30,6 @@
   <%= @cafeteria.user_id %>
 </p>
 
-<p>
-  <b>Likes:</b>
-  <%= @cafeteria.likes %>
-</p>
-
-<p>
-  <b>Pageviews:</b>
-  <%= @cafeteria.pageviews %>
-</p>
 
 <table>
   <tr>
@@ -46,9 +37,11 @@
       <tr>
         <td><%= COFFEES[key] %></td>
         <td><%= @cafeteria.send(key) %></td>
-        <td><%= link_to "Thumbs up", approve_cafeteria_url(@cafeteria, {:approved => key})  %> 
+        <% if @cafeteria.send(key) > 0 %>
+        <td><%= link_to "Thumbs up", approve_cafeteria_url(@cafeteria, {:approved => key})  %>
            (<%= @cafeteria.send("votes_#{key.split('_')[1]}") %>)
         </td>
+        <% end %>
         <td><%= link_to "Blame", blame_cafeteria_url(@cafeteria, {:blamed => key})  %></td>
       </tr>
     <% end %>
@@ -58,3 +51,4 @@
 <%= link_to 'Edit', edit_cafeteria_path(@cafeteria) %> |
 <%= link_to 'Back', cafeterias_path %> |
 <%# link_to "Blame Prices", blame_cafeteria_suggested_prices_path(@cafeteria) %>
+

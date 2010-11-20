@@ -19,12 +19,23 @@
     <%= f.label :address %><br />
     <%= f.text_field :address %>
   </div>
-  
+
   <div class="field">
     <%= f.label :city %><br />
     <%= f.text_field :city %>
   </div>
+
+  <div class="field">
+    <!-- add a validation, we need at least one value -->
+    <% COFFEES.keys.each do |field| %>
+    <%= f.label COFFEES[field] %><br />
+    <%= f.text_field field.to_sym %>
+    <% end %>
+  </div>
+
+
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+

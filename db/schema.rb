@@ -21,18 +21,18 @@ ActiveRecord::Schema.define(:version => 20101120134657) do
     t.integer  "user_id"
     t.integer  "likes"
     t.integer  "pageviews"
-    t.float    "price_1"
-    t.integer  "votes_1"
-    t.float    "price_2"
-    t.integer  "votes_2"
-    t.float    "price_3"
-    t.integer  "votes_3"
-    t.float    "price_4"
-    t.integer  "votes_4"
-    t.float    "price_5"
-    t.integer  "votes_5"
-    t.float    "price_6"
-    t.integer  "votes_6"
+    t.float    "price_1",    :default => 0.0
+    t.integer  "votes_1",    :default => 0
+    t.float    "price_2",    :default => 0.0
+    t.integer  "votes_2",    :default => 0
+    t.float    "price_3",    :default => 0.0
+    t.integer  "votes_3",    :default => 0
+    t.float    "price_4",    :default => 0.0
+    t.integer  "votes_4",    :default => 0
+    t.float    "price_5",    :default => 0.0
+    t.integer  "votes_5",    :default => 0
+    t.float    "price_6",    :default => 0.0
+    t.integer  "votes_6",    :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

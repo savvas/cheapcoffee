@@ -19,7 +19,7 @@ class Cafeteria < ActiveRecord::Base
   def voted_already?
     # check for the coffee type too
     suggested_price = self.suggested_prices.where(:user_id=>voter_id).where(:product=>approved).first
-    errors.add_to_base("You have already voted") if suggested_price
+    errors.add(:base,"You have already voted") if suggested_price
   end
 
   def approved?
@@ -36,7 +36,7 @@ class Cafeteria < ActiveRecord::Base
     if loc.success
       self.lat, self.lng = loc.lat, loc.lng
     else
-      errors.add_to_base("Could not geocode")
+      errors.add(:base, "Could not geocode")
     end
   end
 
