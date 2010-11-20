@@ -5,11 +5,11 @@ class CreateCafeterias < ActiveRecord::Migration
       t.string :address
       t.string :city
       t.float :lat
-      t.float :ltn
+      t.float :lng
       t.integer :user_id
       t.integer :likes
       t.integer :pageviews
-      
+
       # map to coffees with a hash
       t.float :price_1
       t.integer :votes_1
@@ -25,18 +25,18 @@ class CreateCafeterias < ActiveRecord::Migration
       t.integer :votes_5
       t.float :price_6
       t.integer :votes_6
-      
+
 
       t.timestamps
     end
-    
+
     add_index :cafeterias, :name
     add_index :cafeterias, :lat
-    add_index :cafeterias, :ltn
-    
+    add_index :cafeterias, :lng
   end
 
   def self.down
     drop_table :cafeterias
   end
 end
+

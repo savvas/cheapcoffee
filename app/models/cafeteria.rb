@@ -1,34 +1,44 @@
 class Cafeteria < ActiveRecord::Base
+  include Geokit::Geocoders
+
+  acts_as_mappable :default_units => :kms,
+                   :default_formula => :sphere,
+                   :distance_field_name => :distance,
+                   :lat_column_name => :lat,
+                   :lng_column_name => :lng
+
   has_many :suggested_prices
   belongs_to :user
-  
-  attr_accessor :approved, :voter_id
+
+  attr_accessor :approved, :voter_id, :slat, :slng
   validate :voted_already?
+
   before_save :approved?
-  
+  before_create :geocode!
+
   def voted_already?
     # check for the coffee type too
-    suggested_prices = self.suggested_prices.where(:user_id=>voter_id).first
-    errors.add_to_base("You have already voted") if suggested_prices && !suggested_prices.send(approved).nil?
+    suggested_price = self.suggested_prices.where(:user_id=>voter_id).where(:product=>approved).first
+    errors.add_to_base("You have already voted") if suggested_price
   end
-  
+
   def approved?
     if !self.approved.blank?
       votes_attr = "votes_#{self.approved.split('_')[1]}"
       self.send(votes_attr+"=", self.send(votes_attr)+1)
-      # Check if the user has added or updated a price for a coffee of this cafeteria
-      suggested_prices = self.suggested_prices.where(:user_id=>voter_id).first
-      if suggested_prices
-        # if yes then update the new coffee
-        suggested_prices.send(approved+"=",self.send(approved))
-        suggested_prices.save
-      else
-        # if no then create a price suggestion
-        price = Price.new(:cafeteria_id=>self.id, :user_id=>voter_id)
-        price.send(approved+"=",self.send(approved))
-        price.save
-      end
+      # Create a new price suggestion
+      SuggestedPrice.create!(:cafeteria_id=>self.id, :user_id=>voter_id, :product=>approved, :price=>self.send(approved))
     end
   end
-  
+
+  def geocode!
+    loc = Geocoder.google_geocoder("#{self.address}, #{self.city}")
+    if loc.success
+      self.lat, self.lng = loc.lat, loc.lng
+    else
+      errors.add_to_base("Could not geocode")
+    end
+  end
+
 end
+

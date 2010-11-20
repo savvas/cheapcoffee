@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(:version => 20101120134657) do
     t.string   "address"
     t.string   "city"
     t.float    "lat"
-    t.float    "ltn"
+    t.float    "lng"
     t.integer  "user_id"
     t.integer  "likes"
     t.integer  "pageviews"
@@ -38,14 +38,14 @@ ActiveRecord::Schema.define(:version => 20101120134657) do
   end
 
   add_index "cafeterias", ["lat"], :name => "index_cafeterias_on_lat"
-  add_index "cafeterias", ["ltn"], :name => "index_cafeterias_on_ltn"
+  add_index "cafeterias", ["lng"], :name => "index_cafeterias_on_lng"
   add_index "cafeterias", ["name"], :name => "index_cafeterias_on_name"
 
   create_table "suggested_prices", :force => true do |t|
     t.integer  "user_id"
     t.integer  "cafeteria_id"
     t.string   "product"
-    t.float    "price"
+    t.decimal  "price",        :precision => 5, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end

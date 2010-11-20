@@ -1,22 +1,26 @@
 class User < ActiveRecord::Base
-  require 'net/http'
-  require 'net/https'
-  
-  has_many :prices
-  
+  acts_as_mappable :default_units => :kms,
+                   :default_formula => :sphere,
+                   :distance_field_name => :distance,
+                   :lat_column_name => :lat,
+                   :lng_column_name => :lng
+
+  has_many :suggested_prices
+  has_many :cafeterias
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
          :oauthable, :openid_authenticatable
-    
+
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :sex, :birthday
-  
+
   scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
-  
+
   ROLES = %w[admin moderator customer]
   def roles=(roles)
      self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
   end
-    
+
   #
   # Facebook related
   #
@@ -27,13 +31,13 @@ class User < ActiveRecord::Base
       user
     else
       # Create an user with a stub password.
-      User.create!(:email => data["email"], :password => Devise.friendly_token[0..7], 
+      User.create!(:email => data["email"], :password => Devise.friendly_token[0..7],
                :name => data["name"], :birthday => data["birthday"],
                :facebook_uid => data["id"], :gender => data["gender"],
                :network=>"Facebook",:access_token=>access_token.token)
     end
   end
-  
+
   def add_facebook_data!(data,token)
     self.birthday = data["birthday"]
     self.gender = data["gender"]
@@ -41,6 +45,7 @@ class User < ActiveRecord::Base
     self.facebook_access_token = token
     self.save
   end
-  
-  
+
+
 end
+
