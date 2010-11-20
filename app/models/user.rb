@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   #
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
     data = ActiveSupport::JSON.decode(access_token.get('https://graph.facebook.com/me?'))
-    if user = User.where(:email => data["email"])
+    if user = User.where(:email => data["email"]).first
       user.add_facebook_data!(data,access_token.token) if user.facebook_uid.blank?
       user
     else
