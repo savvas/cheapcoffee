@@ -39,6 +39,18 @@ class Cafeteria < ActiveRecord::Base
       errors.add(:base, "Could not geocode")
     end
   end
-
+  
+  def migrate_from_pois
+    Poi.all.each do |poi|
+      Cafeteria.new({
+        :name => poi[:name],
+        :lat => poi[:lat],
+        :lng => poi[:lng],
+        :address => poi[:address]+" "+poi[:area]
+      }).save
+    end
+  end
+  
+  
 end
 
