@@ -1,24 +1,19 @@
 class CafeteriasController < ApplicationController
+  before_filter :authenticate_user!
+  respond_to :html, :xml, :json # class level
+  
   # GET /cafeterias
   # GET /cafeterias.xml
   def index
     @cafeterias = Cafeteria.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @cafeterias }
-    end
+    respond_with(@cafeterias)
   end
 
   # GET /cafeterias/1
   # GET /cafeterias/1.xml
   def show
     @cafeteria = Cafeteria.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @cafeteria }
-    end
+    respond_with(@cafeterias)
   end
 
   # GET /cafeterias/new
@@ -44,7 +39,7 @@ class CafeteriasController < ApplicationController
 
     respond_to do |format|
       if @cafeteria.save
-        format.html { redirect_to(@cafeteria, :notice => 'Cafeteria was successfully created.') }
+        format.html { redirect_to(:action => "index", :notice => 'Cafeteria was successfully created.') }
         format.xml  { render :xml => @cafeteria, :status => :created, :location => @cafeteria }
       else
         format.html { render :action => "new" }

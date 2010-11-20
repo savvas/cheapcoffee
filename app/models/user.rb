@@ -33,11 +33,11 @@ class User < ActiveRecord::Base
   end
   
   def add_facebook_data!(data,token)
-    user.birthday = data["birthday"]
-    user.gender = data["gender"]
-    user.facebook_uid = data["facebook_uid"]
-    user.access_token = token
-    user.save
+    self.birthday = data["birthday"]
+    self.gender = data["gender"]
+    self.facebook_uid = data["facebook_uid"]
+    self.facebook_access_token = token
+    self.save
   end
   
   
