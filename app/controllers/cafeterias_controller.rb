@@ -97,7 +97,36 @@ class CafeteriasController < ApplicationController
     @top3 = SuggestedPrice.find_by_sql("SELECT price, COUNT(*) as freq FROM suggested_prices "+
                                        "WHERE cafeteria_id=#{@cafeteria.id} AND product='#{@product}'" +
                                        " GROUP BY price ORDER BY freq DESC LIMIT 3")
-    puts "--------------------> #{@top3.size}"
   end
+
+
+  def search
+    _update_current_user_location!
+
+    # Do the search!
+    if params[:corner_up]
+      @cafeterias = Cafeteria.in_bounds([params[:corner_up], params[:corner_down]], :origin => current_user)
+    else
+      # Search queries
+      range = params[:range].present? ? params[:range].to_i : 2
+      @cafeterias = Cafeteria.within(range, :origin => current_user)
+    end
+    product = "price_1" # change from params
+    @cafeterias = @cafeterias.order("#{product} DESC")
+    respond_with(@cafeterias)
+  end
+
+  def _update_current_user_location!
+    # if there is no session and no params
+    if session[:lat].blank? && params[:lat].blank?
+      current_user.geocode_me!
+    # if we have params from mobile or browser then update
+    elsif !params[:lat].blank?
+      session[:lat], session[:lng] = params[:lat], params[:lng]
+      current_user.lat = session[:lat]
+      current_user.lng = session[:lng]
+    end
+  end
+
 end
 

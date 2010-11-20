@@ -1,4 +1,4 @@
-COFFEES = { 
+COFFEES = {
   'price_1' => 'Frappe',
   'price_2' => 'Espresso',
   'price_3' => 'Espresso Freddo',
