@@ -5,7 +5,7 @@ class CafeteriasController < ApplicationController
   # GET /cafeterias
   # GET /cafeterias.xml
   def index
-    @cafeterias = Cafeteria
+    @cafeterias = Cafeteria.limit(6)
     respond_with(@cafeterias)
   end
 
