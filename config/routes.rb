@@ -1,4 +1,5 @@
 Cheapcoffee::Application.routes.draw do
+
   resources :cafeterias
 
   devise_for :users
@@ -26,6 +27,7 @@ Cheapcoffee::Application.routes.draw do
     collection do
       get 'search'
     end
+    resources :prices
   end
 
 

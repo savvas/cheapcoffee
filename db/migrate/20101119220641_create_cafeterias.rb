@@ -29,6 +29,11 @@ class CreateCafeterias < ActiveRecord::Migration
 
       t.timestamps
     end
+    
+    add_index :cafeterias, :name
+    add_index :cafeterias, :lat
+    add_index :cafeterias, :ltn
+    
   end
 
   def self.down

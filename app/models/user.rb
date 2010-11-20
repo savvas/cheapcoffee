@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   require 'net/http'
   require 'net/https'
   
+  has_many :prices
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
          :oauthable, :openid_authenticatable

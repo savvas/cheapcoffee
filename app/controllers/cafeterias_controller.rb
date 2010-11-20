@@ -13,7 +13,7 @@ class CafeteriasController < ApplicationController
   # GET /cafeterias/1.xml
   def show
     @cafeteria = Cafeteria.find(params[:id])
-    respond_with(@cafeterias)
+    respond_with(@cafeteria)
   end
 
   # GET /cafeterias/new
