@@ -10,6 +10,10 @@
 <% @prices.each do |price| %>
   <tr>
     <td><%= link_to 'vote', "xx" %></td>
+    
+    <% @price_list.each do |product| %>
+        <%= product[:name] %>
+    <% end %>
   </tr>
 <% end %>
 </table>

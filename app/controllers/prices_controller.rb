@@ -1,5 +1,5 @@
 class PricesController < ApplicationController
-  
+  before_filter :authenticate_user!
   before_filter :find_cafeteria
   
   # GET /prices
@@ -44,7 +44,10 @@ class PricesController < ApplicationController
   # POST /prices.xml
   def create
     @price = Price.new(params[:price])
-
+    @price.update_attributes({
+      :user_id => current_user.id, 
+      :cafeteria_id => @cafeteria.id
+    })
     respond_to do |format|
       if @price.save
         format.html { redirect_to(@price, :notice => 'Price was successfully created.') }

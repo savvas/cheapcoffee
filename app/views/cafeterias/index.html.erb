@@ -27,7 +27,10 @@
     <td><%= cafeteria.pageviews %></td>
     <td><%= link_to 'Show', cafeteria %></td>
     <td><%= link_to 'Edit', edit_cafeteria_path(cafeteria) %></td>
-    <td><%= link_to 'Destroy', cafeteria, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Blame Prices', cafeteria_prices_path(cafeteria) %></td>
+    
+    <td><%# link_to 'Destroy', cafeteria, :confirm => 'Are you sure?', :method => :delete %></td>
+    
   </tr>
 <% end %>
 </table>
