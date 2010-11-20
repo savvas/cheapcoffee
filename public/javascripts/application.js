@@ -65,13 +65,13 @@ $(document).ready(function(){
     
     
     //Toggle 'add cafeteria' form
-    $('div.sidebar a.add-button, div.add-coffeeshop a.close').click(function(){
-        if ($(this).hasClass('close')){
-            _hideAddCoffeeShopForm();
-        }else{
-            _showAddCoffeeShopForm();
-        }
-    });
+    // $('div.sidebar a.add-button, div.add-coffeeshop a.close').click(function(){
+    //     if ($(this).hasClass('close')){
+    //         _hideAddCoffeeShopForm();
+    //     }else{
+    //         _showAddCoffeeShopForm();
+    //     }
+    // });
 
     //Change list
     $('a','p.tabs').click(_changeList);
