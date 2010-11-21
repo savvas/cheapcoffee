@@ -112,12 +112,12 @@ class CafeteriasController < ApplicationController
 
 
   def search
-    if not user_signed_in?
+   # if not user_signed_in?
         current_user = User.new
         current_user.lat, current_user.lng = params[:c_lat], params[:c_lng]
-    else
-        _update_current_user_location!
-    end
+    #else
+     #   _update_current_user_location!
+    #end
 
     if params[:sw_lat]
       sw_point = GeoKit::LatLng.new(params[:sw_lat],params[:sw_lng])
@@ -135,7 +135,7 @@ class CafeteriasController < ApplicationController
     cafeterias = cafeterias.limit(20)
     @cafeterias = cafeterias.collect do |c|
        {'cafeteria'=>{ 'id'=>c.id, 'name'=>c.name, 'address'=>c.address,'price_1'=>c.price_1,
-        'lat'=>c.lat, 'lng' => c.lng, 'distance' => c.distance[0..5].to_f }}
+        'lat'=>c.lat, 'lng' => c.lng, 'distance' => c.distance[0..3].to_f }}
     end
 
     respond_with(@cafeterias)
@@ -143,17 +143,17 @@ class CafeteriasController < ApplicationController
 
   def _update_current_user_location!
     # if there is no session and no params
-    if session[:lat].blank? && params[:lat].blank?
+    if session[:c_lat].blank? && params[:c_lat].blank?
       current_user.geocode_me!
-      session[:lat], session[:lng] = current_user.lat, current_user.lng
+      session[:c_lat], session[:c_lng] = current_user.lat, current_user.lng
     # if we have params from mobile or browser then update
     elsif !params[:lat].blank?
-      session[:lat], session[:lng] = params[:lat], params[:lng]
-      current_user.lat = session[:lat]
-      current_user.lng = session[:lng]
+      session[:c_lat], session[:c_lng] = params[:lat], params[:c_lng]
+      current_user.lat = session[:c_lat]
+      current_user.lng = session[:c_lng]
     # if only session is present then use the sessio data
     else
-      current_user.lat, current_user.lng = session[:lat], session[:lng]
+      current_user.lat, current_user.lng = session[:c_lat], session[:c_lng]
     end
   end
 

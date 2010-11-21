@@ -47,11 +47,11 @@ function show_cafeterias_on_map(map, data) {
   infowindow = new google.maps.InfoWindow({
     content: "holding..."
   });
-  
-  
+
+
   var infowindow = new google.maps.InfoWindow();
   var markers_array = [];
-  
+
   for(i=0; i < data.length; i++) {
     cafe = data[i].cafeteria;
     if ((cafe.name).indexOf('Starbucks', 0) > -1) {
@@ -59,17 +59,17 @@ function show_cafeterias_on_map(map, data) {
     } else {
       icon_path = 'images/coffeePin.png';
     }
-    
+
     cafe_point = new google.maps.LatLng(cafe.lat+0,cafe.lng+0);
     var marker = new google.maps.Marker({
-        position: cafe_point, 
-        title: cafe.name, 
-        icon: icon_path, 
+        position: cafe_point,
+        title: cafe.name,
+        icon: icon_path,
         cafe_name: cafe.name+''
-    }); 
+    });
     markers_array.push(marker);
   }
-  
+
   for(i=0; i < markers_array.length; i++) {
     cur_marker = markers_array[i];
     google.maps.event.addListener(cur_marker, 'click', function() {
@@ -80,9 +80,9 @@ function show_cafeterias_on_map(map, data) {
   }
   _createLists(data);
 }
-  
-  
-  
+
+
+
 
 
 $(document).ready(function(){
@@ -252,8 +252,12 @@ function _resetForm(){
 var d;
 // Create the cafeteria lists in the right
 function _createLists(data){ d=data;
-    templ='{{#cafeterias}}<tr><td class="number">{{ cafeteria/index }}</td><td class="name">{{> link }}</td><td class="price">{{ cafeteria/price_1 }}</td><td class="distance">{{ cafeteria/distance }} m.</td></tr>';
-    row_template = Handlebars.compile(templ);
+    templch='{{#cafeterias}}<tr><td class="number">{{ cafeteria/index }}</td><td class="name">{{> link }}</td><td class="price">{{ cafeteria/price_1 }}  &#8364;</td></tr>';
+    templne='{{#cafeterias}}<tr><td class="number">{{ cafeteria/index }}</td><td class="name">{{> link }}</td><td class="distance">{{ cafeteria/distance }} km.</td></tr>';
+
+    row_template_cheap = Handlebars.compile(templch);
+    row_template_near = Handlebars.compile(templne);
+
     partials = { "link": '<a href="/cafeterias/{{cafeteria/id}}" alt="{{cafeteria/name}}">{{cafeteria/name}}</a>'};
     cheapest = data;
     cheapest.sort(function (a, b) {
@@ -262,16 +266,16 @@ function _createLists(data){ d=data;
     for (var i=0; i < cheapest.length; i++){
         cheapest[i]['cafeteria']['index'] = i+1;
     }
-    $('table.cheap-list').html(row_template({'cafeterias':cheapest},{"partials": partials}));
+    $('table.cheap-list').html(row_template_cheap({'cafeterias':cheapest},{"partials": partials}));
 
     nearest = data;
     nearest.sort(function (a, b) {
         return a['cafeteria'].distance > b['cafeteria'].distance;
     });
     for (var i=0; i < nearest.length; i++){
-        nearest[i]['cafeteria']['index'] = i;
+        nearest[i]['cafeteria']['index'] = i+1;
     }
-    $('table.near-list').html(row_template({'cafeterias':nearest},{"partials": partials}));
+    $('table.near-list').html(row_template_near({'cafeterias':nearest},{"partials": partials}));
 }
 
 /*===============================
