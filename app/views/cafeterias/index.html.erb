@@ -1,3 +1,5 @@
+
+
 <div id="main">
 	<div class="map-container">
 		<div id="map"></div>
@@ -63,25 +65,10 @@
 				<a href="#" rel="near-list">NEAREST</a>
 			</p>
 			<table class="cheap-list active">
-			  <% @cafeterias.each_with_index do |cafeteria, index| %>
-				<tr>
-					<td class="number"><%= index+1 %></td>
-					<td class="name"><a href="#"><%= link_to cafeteria.name, cafeteria_path(cafeteria) %></a></td>
-					<td class="price"><%= cafeteria.price_1 %></td>
-				</tr>
-			  <% end %>
 			</table>
-			
-			
 			<table class="near-list">
-			  <% @cafeterias.each_with_index do |cafeteria, index| %>
-				<tr>
-					<td class="number"><%= index+1 %></td>
-					<td class="name"><a href="#"><%= link_to cafeteria.name, cafeteria_path(cafeteria) %></a></td>
-					<td class="price"><%= cafeteria.price_1 %></td>
-				</tr>
-			  <% end %>
 			</table>
 		</div>
 	</div>
 </div>
+

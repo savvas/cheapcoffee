@@ -14,8 +14,11 @@
   <%= stylesheet_link_tag "reset", "960" %>
   <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" media="screen"  charset="utf-8">
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-  <%= javascript_include_tag "jquery.min", "rails", "jquery.json", "jquery.autocomplete.pack", "application" %>
+  <%= javascript_include_tag "jquery.min", "rails", "jquery.json", "jquery.autocomplete.pack", "handlebars", "application" %>
   <%= csrf_meta_tag %>
+  <% if content_for?(:js) %>
+    <%= yield(:js) %>
+  <% end %>
 </head>
 
 

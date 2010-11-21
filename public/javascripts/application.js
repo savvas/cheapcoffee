@@ -50,8 +50,7 @@ function show_cafeterias_on_map(map, data) {
   
   
   var infowindow = new google.maps.InfoWindow();
-  var markers_array = [];
-  
+
   for(i=0; i < data.length; i++) {
     cafe = data[i].cafeteria;
     if ((cafe.name).indexOf('Starbucks', 0) > -1) {
@@ -62,22 +61,17 @@ function show_cafeterias_on_map(map, data) {
     
     cafe_point = new google.maps.LatLng(cafe.lat+0,cafe.lng+0);
     var marker = new google.maps.Marker({
-        position: cafe_point, 
-        title: cafe.name, 
-        icon: icon_path, 
-        cafe_name: cafe.name+''
-    }); 
-    markers_array.push(marker);
-  }
-  
-  for(i=0; i < markers_array.length; i++) {
-    cur_marker = markers_array[i];
-    google.maps.event.addListener(cur_marker, 'click', function() {
-      infowindow.setContent(this.cafe_name);
+        position: cafe_point,
+        title: cafe.name,
+        icon: '/images/coffeePin.png'
+    });
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.setContent(cafe.name);
       infowindow.open(map, this);
     });
     cur_marker.setMap(map);
   }
+  _createLists(data);
 }
 
 $(document).ready(function(){
@@ -85,11 +79,11 @@ $(document).ready(function(){
     //Cancel click on ajax links
     $('a[href=#]').click(function(){ return false; });
 
-    //On load initialize google maps 
+    //On load initialize google maps
     initializeGMaps();
 
     map = mapObj.map;
-    
+
     google.maps.event.addListener(mapObj.map, 'zoom_changed', function() {
       ne = mapObj.map.getBounds().getNorthEast();
       sw = mapObj.map.getBounds().getSouthWest();
@@ -99,7 +93,7 @@ $(document).ready(function(){
         show_cafeterias_on_map(map, data);
       });
     });
-    
+
     google.maps.event.addListener(mapObj.map, 'dragend', function() {
       ne = mapObj.map.getBounds().getNorthEast();
       sw = mapObj.map.getBounds().getSouthWest();
@@ -109,9 +103,9 @@ $(document).ready(function(){
         show_cafeterias_on_map(map, data);
       });
     });
-    
-    
-    
+
+
+
     //Toggle 'add cafeteria' form
     // $('div.sidebar a.add-button, div.add-coffeeshop a.close').click(function(){
     //     if ($(this).hasClass('close')){
@@ -123,15 +117,15 @@ $(document).ready(function(){
 
     //Change list
     $('a','p.tabs').click(_changeList);
-    
+
     //Form inputs reset fields
     $('input[type=text]', 'div.add-coffeeshop')
     .focus(_focusFields)
     .blur(_blurFields);
-   
+
     //Submit 'add cafeteria' form
     $('p.submit input', 'div.add-coffeeshop').click(_submitCoffeeForm);
-    
+
 });
 /*===============================
 2. Jquery Event Binding - end
@@ -179,9 +173,9 @@ function _showAddCoffeeShopForm(){
 
 //Hide 'add cafeteria' form
 function _hideAddCoffeeShopForm(){
-    var $form = $('div.add-coffeeshop', 'div.map-container');  
+    var $form = $('div.add-coffeeshop', 'div.map-container');
     $('a.add-button','div.sidebar ').removeClass('close');
-    $form.fadeOut(opts.animDur);  
+    $form.fadeOut(opts.animDur);
     $form.find().addCla;
 }
 
@@ -219,13 +213,13 @@ function _submitCoffeeForm(){
             $form = $('div.add-coffeeshop', 'div.map-container');
         $sendingBox.addClass('sending');
         $.ajax({
-            url: opts.ajaxURLS.submitCafe, 
+            url: opts.ajaxURLS.submitCafe,
             data:{
                 address: coffeeAddress,
                 name: coffeeName,
                 type: coffeeType,
                 price: coffeePrice
-            }, 
+            },
             success: function(){
                 _resetForm();
                 $form.fadeOut(opts.animDur);
@@ -236,7 +230,7 @@ function _submitCoffeeForm(){
 
 //Reset form fields
 function _resetForm(){
-    var $form = $('div.add-coffeeshop', 'div.map-container'); 
+    var $form = $('div.add-coffeeshop', 'div.map-container');
     $form.find('input[type=text]').each(function(){
         $(this).val($(this).attr('title'));
     });
@@ -244,7 +238,32 @@ function _resetForm(){
     $form.find('#coffeeShopPrice').val('5');
     $form.find('p.submit').removeClass('sending');
 }
+var d;
+// Create the cafeteria lists in the right
+function _createLists(data){ d=data;
+    templ='{{#cafeterias}}<tr><td class="number">{{ cafeteria/index }}</td><td class="name">{{> link }}</td><td class="price">{{ cafeteria/price_1 }}</td><td class="distance">{{ cafeteria/distance }} m.</td></tr>';
+    row_template = Handlebars.compile(templ);
+    partials = { "link": '<a href="/cafeterias/{{cafeteria/id}}" alt="{{cafeteria/name}}">{{cafeteria/name}}</a>'};
+    cheapest = data;
+    cheapest.sort(function (a, b) {
+        return a['cafeteria'].price_1 > b['cafeteria'].price_1;
+    });
+    for (var i=0; i < cheapest.length; i++){
+        cheapest[i]['cafeteria']['index'] = i+1;
+    }
+    $('table.cheap-list').html(row_template({'cafeterias':cheapest},{"partials": partials}));
+
+    nearest = data;
+    nearest.sort(function (a, b) {
+        return a['cafeteria'].distance+0 > b['cafeteria'].distance+0;
+    });
+    for (var i=0; i < nearest.length; i++){
+        nearest[i]['cafeteria']['index'] = i;
+    }
+    $('table.near-list').html(row_template({'cafeterias':nearest},{"partials": partials}));
+}
 
 /*===============================
 3. Functions - end
 ===============================*/
+
