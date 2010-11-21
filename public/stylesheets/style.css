@@ -389,11 +389,108 @@ div#footer{
 1. Global Styles - end
 ===============================*/
 
+/* @group myform */
+form.myform {
+	
+}
+.myform label {
+	font-size: 16px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+form.myform input {
+	font-size: 16px;
+	padding: 0px !important;
+}
+	input.suggest_price {
+		background: #66FF66;
+		width: 200px;
+		float: right;
+		display: block;
+		color: #333;
+		    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border: 1px solid #ccc;
+    	height: 30px;
+    	line-height: 30px;
+    	cursor: pointer;
+	}
+		input.suggest_price:hover {
+			background: #00FF33;
+		}
+
+
+/* @end */
+
+/* @group Cafeteria#blame */
+h4 {
+	font-size: 18px;
+	margin-bottom: 0px;
+}
+ul#blame {
+	list-style: none;
+	display: block;
+	overflow: hidden;
+	padding: 0px;
+	margin: 0px;
+}
+	ul#blame li {
+		display: block;
+		overflow: hidden;
+		float: left;
+		width: 150px;
+		margin: 10px;
+		background: #CCFFFF;
+		color: #222;
+		text-align: center;
+		padding: 5px;
+		border: 1px solid #ccc;
+		    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+
+	}
+		ul#blame li:hover {
+			background: #FFFF99;
+		}
+	ul#blame li span {
+		display: block;
+		clear: both;
+	}
+
+	ul#blame li span.price {
+		font-size: 32px;
+		padding-top: 10px;
+		margin-bottom: 10px;
+	}
+	ul#blame li span.votes {
+		font-size: 12px;
+	}
+	
+	ul#blame input.vote_it {
+		background: #6699FF;
+		height: 30px;
+		color: #222;
+		font-size: 14px;
+		cursor: pointer;
+	}
+		ul#blame input.vote_it:hover {
+			background: #66FF66;
+		}
+	
+
+
+/* @end */
+
 /* @group Cafeteria#show */
 h1 {
 	margin-bottom: 10px;
 	font-size: 40px;
 	font-weight: normal;
+}
+h2 {
+	margin-bottom: 0px;
 }
 table#cafe_pricelist {
 	width: 400px;	
