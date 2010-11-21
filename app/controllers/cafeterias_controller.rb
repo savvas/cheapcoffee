@@ -5,8 +5,8 @@ class CafeteriasController < ApplicationController
   # GET /cafeterias
   # GET /cafeterias.xml
   def index
-    @cafeterias = Cafeteria.limit(6)
-    respond_with(@cafeterias)
+    #@cafeterias = Cafeteria.limit(6)
+    #respond_with(@cafeterias)
   end
 
   # GET /cafeterias/1
@@ -116,7 +116,7 @@ class CafeteriasController < ApplicationController
     # Do the search!
     if params[:sw_lat]
       sw_point = GeoKit::LatLng.new(params[:sw_lat],params[:sw_lng])
-      ne_point = GeoKit::LatLng.new(params[:ne_lat],params[:ne_lng])      
+      ne_point = GeoKit::LatLng.new(params[:ne_lat],params[:ne_lng])
       bounds = GeoKit::Bounds.new(sw_point,ne_point)
       @cafeterias = Cafeteria.in_bounds(bounds)
     else {
