@@ -93,7 +93,8 @@ $(document).ready(function(){
     google.maps.event.addListener(mapObj.map, 'zoom_changed', function() {
       ne = mapObj.map.getBounds().getNorthEast();
       sw = mapObj.map.getBounds().getSouthWest();
-      ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+'&ne_lng='+ne.lng();
+      c = mapObj.map.getCenter();
+      ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+'&ne_lng='+ne.lng()+'&c_lat='+c.lat()+'&c_lng='+c.lng();
       $.getJSON(ajax_url, function(data){
         show_cafeterias_on_map(map, data);
       });
@@ -102,7 +103,8 @@ $(document).ready(function(){
     google.maps.event.addListener(mapObj.map, 'dragend', function() {
       ne = mapObj.map.getBounds().getNorthEast();
       sw = mapObj.map.getBounds().getSouthWest();
-      ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+'&ne_lng='+ne.lng();
+      c = mapObj.map.getCenter();
+      ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+'&ne_lng='+ne.lng()+'&c_lat='+c.lat()+'&c_lng='+c.lng();
       $.getJSON(ajax_url, function(data){
         show_cafeterias_on_map(map, data);
       });
