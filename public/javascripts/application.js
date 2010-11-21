@@ -41,23 +41,42 @@ var mapObj = {
 /*===============================
 2. Jquery Event Binding - start
 ===============================*/
+var infowindow = null;
 
 function show_cafeterias_on_map(map, data) {
+  infowindow = new google.maps.InfoWindow({
+    content: "holding..."
+  });
+  
+  
   var infowindow = new google.maps.InfoWindow();
+  var markers_array = [];
   
   for(i=0; i < data.length; i++) {
     cafe = data[i].cafeteria;
+    if ((cafe.name).indexOf('Starbucks', 0) > -1) {
+      icon_path = 'images/starbucks.png';
+    } else {
+      icon_path = 'images/coffeePin.png';
+    }
+    
     cafe_point = new google.maps.LatLng(cafe.lat+0,cafe.lng+0);
     var marker = new google.maps.Marker({
         position: cafe_point, 
         title: cafe.name, 
-        icon: 'images/coffeePin.png'
-    });
-    google.maps.event.addListener(marker, 'click', function() {
-      infowindow.setContent(cafe.name);
+        icon: icon_path, 
+        cafe_name: cafe.name+''
+    }); 
+    markers_array.push(marker);
+  }
+  
+  for(i=0; i < markers_array.length; i++) {
+    cur_marker = markers_array[i];
+    google.maps.event.addListener(cur_marker, 'click', function() {
+      infowindow.setContent(this.cafe_name);
       infowindow.open(map, this);
     });
-    marker.setMap(map);
+    cur_marker.setMap(map);
   }
 }
 
