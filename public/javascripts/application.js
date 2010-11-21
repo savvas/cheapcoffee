@@ -41,12 +41,24 @@ var mapObj = {
 /*===============================
 2. Jquery Event Binding - start
 ===============================*/
+var infowindow = null;
 
 function show_cafeterias_on_map(map, data) {
+  infowindow = new google.maps.InfoWindow({
+    content: "holding..."
+  });
+  
+  
   var infowindow = new google.maps.InfoWindow();
 
   for(i=0; i < data.length; i++) {
     cafe = data[i].cafeteria;
+    if ((cafe.name).indexOf('Starbucks', 0) > -1) {
+      icon_path = 'images/starbucks.png';
+    } else {
+      icon_path = 'images/coffeePin.png';
+    }
+    
     cafe_point = new google.maps.LatLng(cafe.lat+0,cafe.lng+0);
     var marker = new google.maps.Marker({
         position: cafe_point,
@@ -57,7 +69,7 @@ function show_cafeterias_on_map(map, data) {
       infowindow.setContent(cafe.name);
       infowindow.open(map, this);
     });
-    marker.setMap(map);
+    cur_marker.setMap(map);
   }
   _createLists(data);
 }
@@ -75,7 +87,8 @@ $(document).ready(function(){
     google.maps.event.addListener(mapObj.map, 'zoom_changed', function() {
       ne = mapObj.map.getBounds().getNorthEast();
       sw = mapObj.map.getBounds().getSouthWest();
-      ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+'&ne_lng='+ne.lng();
+      c = mapObj.map.getCenter();
+      ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+'&ne_lng='+ne.lng()+'&c_lat='+c.lat()+'&c_lng='+c.lng();
       $.getJSON(ajax_url, function(data){
         show_cafeterias_on_map(map, data);
       });
@@ -84,7 +97,8 @@ $(document).ready(function(){
     google.maps.event.addListener(mapObj.map, 'dragend', function() {
       ne = mapObj.map.getBounds().getNorthEast();
       sw = mapObj.map.getBounds().getSouthWest();
-      ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+'&ne_lng='+ne.lng();
+      c = mapObj.map.getCenter();
+      ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+'&ne_lng='+ne.lng()+'&c_lat='+c.lat()+'&c_lng='+c.lng();
       $.getJSON(ajax_url, function(data){
         show_cafeterias_on_map(map, data);
       });
