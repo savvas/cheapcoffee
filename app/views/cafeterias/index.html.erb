@@ -1,27 +1,4 @@
-<% content_for(:js)%>
-  <script>
-    row_template = Handlebars.compile($('#template-row').html().replace(/{&gt;/g,'{>'));
-    partials = { "link": '<a href src="/cafeterias/{{id}}" alt="{{name}}">{{name}}</a>'};
-    cheapest = data;
-    cheapest.sort(function (a, b) {
-        return a['cafeteria'].price_1 < b['cafeteria'].price_1;
-    });
-    for (var i=0; i < cheapest.length; i++){
-        cheapest['cafeteria']['index'] = i;
-    }
-    $('cheap-list').html(row_template(cheapest,{"partials": partials}));
 
-    closest = data;
-    closest.sort(function (a, b) {
-        return a['cafeteria'].distance+0 < b['cafeteria'].distance+0;
-    });
-    for (var i=0; i < nearest.length; i++){
-        nearest['cafeteria']['index'] = i;
-    }
-    $('near-list').html(row_template(closest,{"partials": partials}));
-
-  </script>
-<% end %>
 
 <div id="main">
 	<div class="map-container">
@@ -93,15 +70,5 @@
 			</table>
 		</div>
 	</div>
-</div>
-
-
-<div id="template-row" style="display:none">
-  <tr>
-    <td class="number">{{ index }}</td>
-    <td class="name">{{> link }}</td>
-    <td class="price">{{ price }}</td>
-    <td class="distance">{{ distance }}} m.</td>
-  </tr>
 </div>
 

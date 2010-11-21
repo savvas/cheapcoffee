@@ -10,7 +10,7 @@ class Cafeteria < ActiveRecord::Base
   has_many :suggested_prices
   belongs_to :user
 
-  attr_accessor :approved, :voter_id, :slat, :slng, :telephone, :website
+  attr_accessor :approved, :voter_id, :slat, :slng, :dist, :telephone, :website
   validate :voted_already?
 
   before_save :approved?
@@ -41,18 +41,6 @@ class Cafeteria < ActiveRecord::Base
         end
     end
   end
-
-  def migrate_from_pois
-    Poi.all.each do |poi|
-      Cafeteria.new({
-        :name => poi[:name],
-        :lat => poi[:lat],
-        :lng => poi[:lng],
-        :address => poi[:address]+" "+poi[:area]
-      }).save
-    end
-  end
-
 
 end
 

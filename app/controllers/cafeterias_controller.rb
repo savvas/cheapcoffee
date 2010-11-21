@@ -112,21 +112,30 @@ class CafeteriasController < ApplicationController
 
 
   def search
-    # _update_current_user_location!
-    # Do the search!
+    if not user_signed_in?
+        current_user = User.new
+        current_user.lat, current_user.lng = params[:clat], params[:clng]
+    else
+        _update_current_user_location!
+    end
+
     if params[:sw_lat]
       sw_point = GeoKit::LatLng.new(params[:sw_lat],params[:sw_lng])
       ne_point = GeoKit::LatLng.new(params[:ne_lat],params[:ne_lng])
       bounds = GeoKit::Bounds.new(sw_point,ne_point)
-      @cafeterias = Cafeteria.in_bounds(bounds)
-    else {
-    }
+      cafeterias = Cafeteria.in_bounds(bounds, :origin => current_user)
+    else
       # Search queries
-      range = params[:range].present? ? params[:range].to_i : 2
-      @cafeterias = Cafeteria.within(range, :origin => current_user)
+      range = params[:range].present? ? params[:range].to_i : 1
+      cafeterias = Cafeteria.within(range, :origin => current_user)
     end
-    product = "price_1" # change from params
-    @cafeterias = @cafeterias.order("#{product} DESC")
+
+    product = "price_1" # change from params search
+    cafeterias = cafeterias.order("#{product} ASC")
+    @cafeterias = cafeterias.collect do |c|
+       {'cafeteria'=>{ 'id'=>c.id, 'name'=>c.name, 'address'=>c.address,'price_1'=>c.price_1, 'lat'=>c.lat, 'lng' => c.lng }}
+    end
+
     respond_with(@cafeterias)
   end
 
