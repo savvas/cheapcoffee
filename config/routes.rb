@@ -26,7 +26,7 @@ Cheapcoffee::Application.routes.draw do
     end
 
     collection do
-      get 'search'
+      # get 'search'
     end
 
     resources :suggested_prices

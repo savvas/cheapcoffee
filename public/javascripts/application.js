@@ -41,6 +41,19 @@ var mapObj = {
 /*===============================
 2. Jquery Event Binding - start
 ===============================*/
+
+function show_cafeterias_on_map(map, data) {
+  for(i=0; i < data.length; i++) {
+    cafe = data[i].cafeteria;
+    cafe_point = new google.maps.LatLng(cafe.lat+0,cafe.lng+0);
+    var marker = new google.maps.Marker({
+        position: cafe_point, 
+        map: map, 
+        title:"asdf"
+    });
+  }
+}
+
 $(document).ready(function(){
 
     //Cancel click on ajax links
@@ -49,17 +62,24 @@ $(document).ready(function(){
     //On load initialize google maps 
     initializeGMaps();
 
-
+    map = mapObj.map;
+    
     google.maps.event.addListener(mapObj.map, 'zoom_changed', function() {
       ne = mapObj.map.getBounds().getNorthEast();
       sw = mapObj.map.getBounds().getSouthWest();
-      console.log("search again!" +"--" +ne +" -- "+ sw);
+      ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+'&ne_lng='+ne.lng();
+      $.getJSON(ajax_url, function(data){
+        show_cafeterias_on_map(map, data);
+      });
     });
     
     google.maps.event.addListener(mapObj.map, 'dragend', function() {
       ne = mapObj.map.getBounds().getNorthEast();
       sw = mapObj.map.getBounds().getSouthWest();
-      console.log("search again!" +"-- "+ne +" -- "+ sw);
+      ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+'&ne_lng='+ne.lng();
+      $.getJSON(ajax_url, function(data){
+        show_cafeterias_on_map(map, data);
+      });
     });
     
     
