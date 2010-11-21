@@ -30,6 +30,6 @@
 
 
 <div class="clear"></div>
-<%= link_to 'Edit', edit_cafeteria_path(@cafeteria), :style => "float: right" %>
+<%= link_to 'Edit', edit_cafeteria_path(@cafeteria), :style => "float: right" if user_signed_in? %>
 <%# link_to "Blame Prices", blame_cafeteria_suggested_prices_path(@cafeteria) %>
 

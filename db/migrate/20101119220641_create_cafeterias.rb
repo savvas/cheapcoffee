@@ -1,14 +1,15 @@
 class CreateCafeterias < ActiveRecord::Migration
   def self.up
     create_table :cafeterias do |t|
-      t.string :name
-      t.string :address
-      t.string :city
+      t.string :name, :length => 30
+      t.string :address, :length => 30
+      t.string :city, :length => 30
       t.float :lat
       t.float :lng
       t.integer :user_id
       t.integer :likes
-      t.integer :pageviews
+      t.string :telephone, :length => 14
+      t.string :website, :length => 50
 
       # map to coffees with a hash
       t.float :price_1, :default => 0
@@ -27,12 +28,20 @@ class CreateCafeterias < ActiveRecord::Migration
       t.integer :votes_6, :default => 0
 
 
+
       t.timestamps
     end
 
     add_index :cafeterias, :name
     add_index :cafeterias, :lat
     add_index :cafeterias, :lng
+    add_index :cafeterias, :price_1
+    add_index :cafeterias, :price_2
+    add_index :cafeterias, :price_3
+    add_index :cafeterias, :price_4
+    add_index :cafeterias, :price_5
+    add_index :cafeterias, :price_6
+
   end
 
   def self.down

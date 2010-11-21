@@ -1,4 +1,7 @@
 <h1><%= @cafeteria.name %></h1>
 <h2><%= @cafeteria.address %> <%= @cafeteria.city %></h2>
-<%= link_to 'Back', cafeterias_path %> 
+<h3><%= @cafeteria.telephone %></h3>
+<h3><%= link_to "Website", @cafeteria.website %></h3>
+<%= link_to 'Back', cafeterias_path %>
 <div class="clear" style="margin: 10px 0px">&nbps;</div>
+
