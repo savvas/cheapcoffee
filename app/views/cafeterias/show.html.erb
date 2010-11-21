@@ -1,54 +1,38 @@
-<p id="notice"><%= notice %></p>
+<h1><%= @cafeteria.name %></h1>
+<h2><%= @cafeteria.address %> <%= @cafeteria.city %></h2>
+<%= link_to 'Back', cafeterias_path %> 
+<div class="clear"></div>
 
-<p>
-  <b>Name:</b>
-  <%= @cafeteria.name %>
-</p>
+<div class="grid_7">
+  <div id="cafeteria_map">
+    <img src="http://maps.google.com/maps/api/staticmap?center=<%= @cafeteria.lat.to_s+","+@cafeteria.lng.to_s %>&zoom=15&markers=<%= @cafeteria.lat.to_s+","+@cafeteria.lng.to_s %>&path=color:0x0000FF80|weight:5|37.40316,-122.07716&size=540x300&sensor=false" id="" class="" alt="" />
+  </div>
+</div><!-- end grid_5 -->
 
-<p>
-  <b>Address:</b>
-  <%= @cafeteria.address %>
-</p>
-
-<p>
-  <b>City:</b>
-  <%= @cafeteria.city %>
-</p>
-
-<p>
-  <b>Lat:</b>
-  <%= @cafeteria.lat %>
-</p>
-
-<p>
-  <b>Lng:</b>
-  <%= @cafeteria.lng %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @cafeteria.user_id %>
-</p>
+<div class="grid_5">
+  <h3>Τιμές καφέ</h3>
+  <table id="cafe_pricelist">
+    <tr>
+      <% COFFEES.keys.each do |key| %>
+        <tr>
+          <td class="name"><%= COFFEES[key] %></td>
+          <td class="price"><%= @cafeteria.send(key) %></td>
+          <td class="confirm">
+            <% if @cafeteria.send(key) > 0 %>
+              <%= link_to "Ισχύει!", approve_cafeteria_url(@cafeteria, {:approved => key})  %>
+               (<%= @cafeteria.send("votes_#{key.split('_')[1]}") %>)
+            <% end %>
+          </td>
+          <td class="blame"><%= link_to "Λάθος τιμή?", blame_cafeteria_url(@cafeteria, {:blamed => key})  %></td>
+        </tr>
+      <% end %>
+    </tr>
+  </table>
+</div><!-- end grid_7 -->
 
 
-<table>
-  <tr>
-    <% COFFEES.keys.each do |key| %>
-      <tr>
-        <td><%= COFFEES[key] %></td>
-        <td><%= @cafeteria.send(key) %></td>
-        <% if @cafeteria.send(key) > 0 %>
-        <td><%= link_to "Thumbs up", approve_cafeteria_url(@cafeteria, {:approved => key})  %>
-           (<%= @cafeteria.send("votes_#{key.split('_')[1]}") %>)
-        </td>
-        <% end %>
-        <td><%= link_to "Blame", blame_cafeteria_url(@cafeteria, {:blamed => key})  %></td>
-      </tr>
-    <% end %>
-  </tr>
-</table>
 
-<%= link_to 'Edit', edit_cafeteria_path(@cafeteria) %> |
-<%= link_to 'Back', cafeterias_path %> |
+<div class="clear"></div>
+<%= link_to 'Edit', edit_cafeteria_path(@cafeteria), :style => "float: right" %>
 <%# link_to "Blame Prices", blame_cafeteria_suggested_prices_path(@cafeteria) %>
 

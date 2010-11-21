@@ -1,3 +1,7 @@
+/* @override http://localhost:3000/stylesheets/style.css */
+
+/* @override http://localhost:3000/stylesheets/style.css */
+
 /* =Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html
 -------------------------------------------------------------- */
 @charset utf-8;
@@ -97,17 +101,14 @@ a:hover{
     text-decoration:underline;
 }
 
-#container{
-    overflow:hidden;
-    margin:20px auto;
-    width:940px;
-    padding:0 10px;
-}
 #header, #main, #footer{
     float:left;
     width:100%;
+    padding: 10px 0px;
 }
-
+#main {
+	min-height: 500px;
+}
 /*Header*/
 div#header h1 a{
     float:left;
@@ -387,3 +388,34 @@ div#footer{
 /*===============================
 1. Global Styles - end
 ===============================*/
+
+/* @group Cafeteria#show */
+h1 {
+	margin-bottom: 10px;
+	font-size: 40px;
+	font-weight: normal;
+}
+table#cafe_pricelist {
+	width: 400px;	
+}
+	table#cafe_pricelist td {	
+		border: 1px solid #784202;
+		padding: 5px;
+		font-size: 16px;
+	}
+	table#cafe_pricelist td.confirm {
+		font-size: 12px;
+		color: #ddd;
+	}
+		table#cafe_pricelist td.confirm a{
+			color: #66CC33;
+			font-size: 16px;
+		}
+	table#cafe_pricelist td.blame a{
+		color: #FFA07A;
+	}		
+		
+
+
+/* @end */
+
