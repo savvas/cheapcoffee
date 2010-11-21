@@ -114,7 +114,7 @@ class CafeteriasController < ApplicationController
   def search
     if not user_signed_in?
         current_user = User.new
-        current_user.lat, current_user.lng = params[:clat], params[:clng]
+        current_user.lat, current_user.lng = params[:c_lat], params[:c_lng]
     else
         _update_current_user_location!
     end
