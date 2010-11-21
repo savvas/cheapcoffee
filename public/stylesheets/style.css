@@ -516,3 +516,9 @@ table#cafe_pricelist {
 
 /* @end */
 
+
+
+/* DOXARAS dirty fix */
+div.gmnoprint {
+  color: #000 !important;
+}
