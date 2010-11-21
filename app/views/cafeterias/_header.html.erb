@@ -2,10 +2,10 @@
     <%= @cafeteria.name %>
 <% end %>
 <% content_for :meta_tags do %>
-  <meta content="website" property="og:type">
+  <meta content="cafe" property="og:type">
   <meta content="<%= @cafeteria.name %>" property="og:title">
   <meta content="<%= cafeteria_url(@cafeteria) %>" property="og:url">
-
+   <meta property="fb:admins" content="657809015,732631858"/>
   <meta content="<%= @cafeteria.name %>" name="title">
 <% end %>
 <h1><%= @cafeteria.name %>
