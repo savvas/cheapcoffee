@@ -10,7 +10,7 @@ class Cafeteria < ActiveRecord::Base
   has_many :suggested_prices
   belongs_to :user
 
-  attr_accessor :approved, :voter_id, :slat, :slng
+  attr_accessor :approved, :voter_id, :slat, :slng, :telephone, :website
   validate :voted_already?
 
   before_save :approved?
@@ -32,14 +32,16 @@ class Cafeteria < ActiveRecord::Base
   end
 
   def geocode!
-    loc = Geocoder.google_geocoder("#{self.address}, #{self.city}")
-    if loc.success
-      self.lat, self.lng = loc.lat, loc.lng
-    else
-      errors.add(:base, "Could not geocode")
+    if self.lat.blank?
+        loc = Geocoder.google_geocoder("#{self.address}, #{self.city}")
+        if loc.success
+          self.lat, self.lng = loc.lat, loc.lng
+        else
+          errors.add(:base, "Could not geocode")
+        end
     end
   end
-  
+
   def migrate_from_pois
     Poi.all.each do |poi|
       Cafeteria.new({
@@ -50,7 +52,7 @@ class Cafeteria < ActiveRecord::Base
       }).save
     end
   end
-  
-  
+
+
 end
 

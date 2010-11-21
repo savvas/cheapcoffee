@@ -1,5 +1,21 @@
+<div class="grid_8">
 <h1>New cafeteria</h1>
 
 <%= render 'form' %>
 
 <%= link_to 'Back', cafeterias_path %>
+</div>
+
+<div class="grid_4">
+    <h3>Or choose an existing</h3>
+    <ul>
+        <% @existing.each do |cafeteria| %>
+           <li>
+             <h4><a href="#"><%= link_to cafeteria.name, cafeteria_path(cafeteria) %></a></h4>
+             <%= cafeteria.address %><br />
+             <%= (cafeteria.distance.to_f*100.0).to_i %> meters
+           </li>
+        <% end %>
+    </ul>
+</div>
+

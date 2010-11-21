@@ -25,6 +25,11 @@
     <%= f.text_field :city %>
   </div>
 
+  <%= f.hidden_field :lat, :value => @cafeteria.lat %>
+  <%= f.hidden_field :lng, :value => @cafeteria.lng %>
+  <%= f.hidden_field :city, :value => @cafeteria.city %>
+  <%= f.hidden_field :address, :value => @cafeteria.address %>
+
   <div class="field">
     <!-- add a validation, we need at least one value -->
     <% COFFEES.keys.each do |field| %>

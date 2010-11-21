@@ -19,7 +19,18 @@ class CafeteriasController < ApplicationController
   # GET /cafeterias/new
   # GET /cafeterias/new.xml
   def new
+    # get cafeterias in a short distance
+    _update_current_user_location!
+    @existing = Cafeteria.within(0.25, :origin => current_user)
+    # reverse geocode
+    geostr = "#{current_user.lat},#{current_user.lng}"
+    res = Rails.cache.fetch(geostr){ Geokit::Geocoders::GoogleGeocoder.reverse_geocode(geostr) }
+
     @cafeteria = Cafeteria.new
+    @cafeteria.address = res.street_address
+    @cafeteria.city = res.city
+    @cafeteria.lat = res.lat
+    @cafeteria.lng = res.lng
 
     respond_to do |format|
       format.html # new.html.erb
@@ -102,7 +113,6 @@ class CafeteriasController < ApplicationController
 
   def search
     _update_current_user_location!
-
     # Do the search!
     if params[:corner_up]
       @cafeterias = Cafeteria.in_bounds([params[:corner_up], params[:corner_down]], :origin => current_user)
@@ -120,11 +130,15 @@ class CafeteriasController < ApplicationController
     # if there is no session and no params
     if session[:lat].blank? && params[:lat].blank?
       current_user.geocode_me!
+      session[:lat], session[:lng] = current_user.lat, current_user.lng
     # if we have params from mobile or browser then update
     elsif !params[:lat].blank?
       session[:lat], session[:lng] = params[:lat], params[:lng]
       current_user.lat = session[:lat]
       current_user.lng = session[:lng]
+    # if only session is present then use the sessio data
+    else
+      current_user.lat, current_user.lng = session[:lat], session[:lng]
     end
   end
 
