@@ -133,7 +133,8 @@ class CafeteriasController < ApplicationController
     product = "price_1" # change from params search
     cafeterias = cafeterias.order("#{product} ASC")
     @cafeterias = cafeterias.collect do |c|
-       {'cafeteria'=>{ 'id'=>c.id, 'name'=>c.name, 'address'=>c.address,'price_1'=>c.price_1, 'lat'=>c.lat, 'lng' => c.lng }}
+       {'cafeteria'=>{ 'id'=>c.id, 'name'=>c.name, 'address'=>c.address,'price_1'=>c.price_1,
+        'lat'=>c.lat, 'lng' => c.lng, 'distance' => c.distance[0..5].to_f*1000 }}
     end
 
     respond_with(@cafeterias)

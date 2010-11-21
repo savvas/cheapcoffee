@@ -241,7 +241,7 @@ function _createLists(data){ d=data;
 
     nearest = data;
     nearest.sort(function (a, b) {
-        return a['cafeteria'].distance+0 > b['cafeteria'].distance+0;
+        return a['cafeteria'].distance > b['cafeteria'].distance;
     });
     for (var i=0; i < nearest.length; i++){
         nearest[i]['cafeteria']['index'] = i;
