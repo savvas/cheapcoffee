@@ -43,14 +43,21 @@ var mapObj = {
 ===============================*/
 
 function show_cafeterias_on_map(map, data) {
+  var infowindow = new google.maps.InfoWindow();
+  
   for(i=0; i < data.length; i++) {
     cafe = data[i].cafeteria;
     cafe_point = new google.maps.LatLng(cafe.lat+0,cafe.lng+0);
     var marker = new google.maps.Marker({
         position: cafe_point, 
-        map: map, 
-        title:"asdf"
+        title: cafe.name, 
+        icon: 'images/coffeePin.png'
     });
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.setContent(cafe.name);
+      infowindow.open(map, this);
+    });
+    marker.setMap(map);
   }
 }
 
