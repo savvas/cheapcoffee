@@ -24,13 +24,18 @@ class CafeteriasController < ApplicationController
     @existing = Cafeteria.within(0.25, :origin => current_user)
     # reverse geocode
     geostr = "#{current_user.lat},#{current_user.lng}"
-    res = Rails.cache.fetch(geostr){ Geokit::Geocoders::GoogleGeocoder.reverse_geocode(geostr) }
+
 
     @cafeteria = Cafeteria.new
-    @cafeteria.address = res.street_address
-    @cafeteria.city = res.city
-    @cafeteria.lat = res.lat
-    @cafeteria.lng = res.lng
+    begin
+        res = Rails.cache.fetch(geostr){ Geokit::Geocoders::GoogleGeocoder.reverse_geocode(geostr) }
+        @cafeteria.address = res.street_address
+        @cafeteria.city = res.city
+        @cafeteria.lat = res.lat
+        @cafeteria.lng = res.lng
+    rescue
+        logger.error("No Geocode")
+    end
 
     respond_to do |format|
       format.html # new.html.erb
