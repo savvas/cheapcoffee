@@ -95,8 +95,8 @@ class CafeteriasController < ApplicationController
       format.html { redirect_to @cafeteria, :notice => "Thanks!" }
       format.json { render :text => 1 }
     else
-      format.html { redirect_to @cafeteria, :error => @cafeteria.errors }
-      format.json { render :text => -1 }
+        flash[:error] = @cafeteria.errors
+        redirect_to root_path
     end
   end
 
@@ -114,7 +114,7 @@ class CafeteriasController < ApplicationController
   def search
     if not user_signed_in?
         current_user = User.new
-        current_user.lat, current_user.lng = params[:clat], params[:clng]
+        current_user.lat, current_user.lng = params[:c_lat], params[:c_lng]
     else
         _update_current_user_location!
     end
@@ -132,6 +132,7 @@ class CafeteriasController < ApplicationController
 
     product = "price_1" # change from params search
     cafeterias = cafeterias.order("#{product} ASC")
+    cafeterias = cafeterias.limit(20)
     @cafeterias = cafeterias.collect do |c|
        {'cafeteria'=>{ 'id'=>c.id, 'name'=>c.name, 'address'=>c.address,'price_1'=>c.price_1,
         'lat'=>c.lat, 'lng' => c.lng, 'distance' => c.distance[0..5].to_f }}

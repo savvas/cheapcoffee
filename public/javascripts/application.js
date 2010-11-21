@@ -50,7 +50,8 @@ function show_cafeterias_on_map(map, data) {
   
   
   var infowindow = new google.maps.InfoWindow();
-
+  var markers_array = [];
+  
   for(i=0; i < data.length; i++) {
     cafe = data[i].cafeteria;
     if ((cafe.name).indexOf('Starbucks', 0) > -1) {
@@ -61,18 +62,28 @@ function show_cafeterias_on_map(map, data) {
     
     cafe_point = new google.maps.LatLng(cafe.lat+0,cafe.lng+0);
     var marker = new google.maps.Marker({
-        position: cafe_point,
-        title: cafe.name,
-        icon: '/images/coffeePin.png'
-    });
-    google.maps.event.addListener(marker, 'click', function() {
-      infowindow.setContent(cafe.name);
+        position: cafe_point, 
+        title: cafe.name, 
+        icon: icon_path, 
+        cafe_name: cafe.name+''
+    }); 
+    markers_array.push(marker);
+  }
+  
+  for(i=0; i < markers_array.length; i++) {
+    cur_marker = markers_array[i];
+    google.maps.event.addListener(cur_marker, 'click', function() {
+      infowindow.setContent(this.cafe_name);
       infowindow.open(map, this);
     });
     cur_marker.setMap(map);
   }
   _createLists(data);
 }
+  
+  
+  
+
 
 $(document).ready(function(){
 
