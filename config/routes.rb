@@ -34,8 +34,10 @@ Cheapcoffee::Application.routes.draw do
 
   match "/search" => "cafeterias#search", :as => "search"
 
-
-
+  match "/about"    => "pages#about"
+  match "/faq"      => "pages#faq"
+  match "/contact"  => "pages#contact"
+  
   # Sample resource route with sub-resources:
   #   resources :products do
   #     resources :comments, :sales
