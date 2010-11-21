@@ -1,6 +1,6 @@
 class CreateCafeterias < ActiveRecord::Migration
   def self.up
-    create_table :cafeterias do |t|
+    create_table :cafeterias, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
       t.string :name, :length => 30
       t.string :address, :length => 30
       t.string :city, :length => 30

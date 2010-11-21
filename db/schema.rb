@@ -21,6 +21,9 @@ ActiveRecord::Schema.define(:version => 20101120134657) do
     t.integer  "user_id"
     t.integer  "likes"
     t.integer  "pageviews"
+    t.string   "cafeterias"
+    t.string   "telephone"
+    t.string   "website"
     t.float    "price_1",    :default => 0.0
     t.integer  "votes_1",    :default => 0
     t.float    "price_2",    :default => 0.0
@@ -40,6 +43,12 @@ ActiveRecord::Schema.define(:version => 20101120134657) do
   add_index "cafeterias", ["lat"], :name => "index_cafeterias_on_lat"
   add_index "cafeterias", ["lng"], :name => "index_cafeterias_on_lng"
   add_index "cafeterias", ["name"], :name => "index_cafeterias_on_name"
+  add_index "cafeterias", ["price_1"], :name => "index_cafeterias_on_price_1"
+  add_index "cafeterias", ["price_2"], :name => "index_cafeterias_on_price_2"
+  add_index "cafeterias", ["price_3"], :name => "index_cafeterias_on_price_3"
+  add_index "cafeterias", ["price_4"], :name => "index_cafeterias_on_price_4"
+  add_index "cafeterias", ["price_5"], :name => "index_cafeterias_on_price_5"
+  add_index "cafeterias", ["price_6"], :name => "index_cafeterias_on_price_6"
 
   create_table "suggested_prices", :force => true do |t|
     t.integer  "user_id"
@@ -65,7 +74,7 @@ ActiveRecord::Schema.define(:version => 20101120134657) do
     t.integer  "role_mask",                            :default => 1
     t.string   "current_address"
     t.float    "lat"
-    t.float    "ltn"
+    t.float    "lng"
     t.integer  "points",                               :default => 0
     t.string   "facebook_link"
     t.string   "facebook_access_token"
