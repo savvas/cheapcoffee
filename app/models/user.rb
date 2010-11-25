@@ -24,11 +24,17 @@ class User < ActiveRecord::Base
       user.add_facebook_data!(data,access_token.token) if user.facebook_uid.blank?
       user
     else
+      # Get friends
+      friends_data = facebook_session.graph.get_connections("me", "friends")
+      frids = ""
+      friends_data.each do |friend|
+        frids += friend['id'].to_s+","
+      end
       # Create an user with a stub password.
       User.create!(:email => data["email"], :password => Devise.friendly_token[0..7], 
                :name => data["name"], :birthday => data["birthday"],
-               :facebook_uid => data["id"], :gender => data["gender"],
-               :network=>"Facebook",:access_token=>access_token.token)
+               :facebook_uid => data["id"], :gender => data["gender"], :friends_uids => frids,
+               :network=>"Facebook",:facebook_access_token=>access_token.token)
     end
   end
   
