@@ -1,0 +1,32 @@
+<%= render :partial => "header" %>
+
+<div class="grid_7">
+  <h4>Επιλέξετε μία μια άλλη προτεινόμενη τιμή</h4>
+  <ul id="blame">
+    <% for suggestion in @top3 %>
+      <li class="top">
+        <span class="price"><%= suggestion.price %> &euro;</span>
+        <span class="votes"><%= suggestion.freq %> ψήφοι</span>
+        <%= form_for [@cafeteria,SuggestedPrice.new] do |f| %>
+          <%= f.hidden_field :product, :value => @product %>
+          <%= f.hidden_field :cafeteria_id, :value => @cafeteria.id %>
+          <%= f.hidden_field :price, :value => suggestion.price.to_i  %>
+          <input type="submit"  class="vote_it" name="comit" value="Σωστό!" id="comit">
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+
+<div class="grid_5">
+  <h4>Δώστε την δικιά σας τιμή!</h4>
+  <%= form_for [@cafeteria,SuggestedPrice.new], :html => {:class => "myform"} do |f| %>
+    <%= f.label COFFEES[@product] %>
+    <%= f.hidden_field :product, :value => @product %>
+    <%= f.hidden_field :cafeteria_id, :value => @cafeteria.id %>
+    <%= f.text_field :price %>
+    <input type="submit"  class="suggest_price" name="comit" value="Καταχώρηση τιμής" id="comit">
+  <% end %>
+</div>
+

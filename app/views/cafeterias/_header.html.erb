@@ -1,0 +1,20 @@
+<% content_for :title do %>
+    <%= @cafeteria.name %>
+<% end %>
+<% content_for :meta_tags do %>
+  <meta content="cafe" property="og:type">
+  <meta content="<%= @cafeteria.name %>" property="og:title">
+  <meta content="<%= cafeteria_url(@cafeteria) %>" property="og:url">
+   <meta property="fb:admins" content="657809015,732631858"/>
+  <meta content="<%= @cafeteria.name %>" name="title">
+<% end %>
+<h1><%= @cafeteria.name %>
+  <iframe src="http://www.facebook.com/plugins/like.php?href=<%= URI.escape(cafeteria_url(@cafeteria)) %>&amp;layout=button_count&amp;show_faces=true&amp;width=200&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px;" allowTransparency="true"></iframe>
+</h1>
+<h2><%= @cafeteria.address %> <%= @cafeteria.city %>
+<h3><%= @cafeteria.telephone %></h3>
+<h3><%= link_to "Website", @cafeteria.website %></h3>
+</h2>
+<%= link_to 'Back', cafeterias_path %>
+<div class="clear" style="margin: 10px 0px">&nbps;</div>
+

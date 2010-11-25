@@ -1,4 +1,5 @@
 Cheapcoffee::Application.routes.draw do
+
   resources :cafeterias
 
   devise_for :users
@@ -19,16 +20,24 @@ Cheapcoffee::Application.routes.draw do
 
   resources :cafeterias do
     member do
-      post 'confirm'
+      get 'approve'
+      get 'blame'
       post 'check_location'
     end
 
     collection do
-      get 'search'
+      # get 'search'
     end
+
+    resources :suggested_prices
   end
 
+  match "/search" => "cafeterias#search", :as => "search"
 
+  match "/about"    => "pages#about"
+  match "/faq"      => "pages#faq"
+  match "/contact"  => "pages#contact"
+  
   # Sample resource route with sub-resources:
   #   resources :products do
   #     resources :comments, :sales
@@ -60,3 +69,4 @@ Cheapcoffee::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 end
+

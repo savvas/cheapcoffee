@@ -1,30 +1,41 @@
 class CafeteriasController < ApplicationController
+  before_filter :authenticate_user!, :except => [:index, :show, :search]
+  respond_to :html, :xml, :json # class level
+
   # GET /cafeterias
   # GET /cafeterias.xml
   def index
-    @cafeterias = Cafeteria.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @cafeterias }
-    end
+    #@cafeterias = Cafeteria.limit(6)
+    #respond_with(@cafeterias)
   end
 
   # GET /cafeterias/1
   # GET /cafeterias/1.xml
   def show
     @cafeteria = Cafeteria.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @cafeteria }
-    end
+    respond_with(@cafeteria)
   end
 
   # GET /cafeterias/new
   # GET /cafeterias/new.xml
   def new
+    # get cafeterias in a short distance
+    _update_current_user_location!
+    @existing = Cafeteria.within(0.25, :origin => current_user)
+    # reverse geocode
+    geostr = "#{current_user.lat},#{current_user.lng}"
+
+
     @cafeteria = Cafeteria.new
+    begin
+        res = Rails.cache.fetch(geostr){ Geokit::Geocoders::GoogleGeocoder.reverse_geocode(geostr) }
+        @cafeteria.address = res.street_address
+        @cafeteria.city = res.city
+        @cafeteria.lat = res.lat
+        @cafeteria.lng = res.lng
+    rescue
+        logger.error("No Geocode")
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,7 +55,7 @@ class CafeteriasController < ApplicationController
 
     respond_to do |format|
       if @cafeteria.save
-        format.html { redirect_to(@cafeteria, :notice => 'Cafeteria was successfully created.') }
+        format.html { redirect_to(:action => "index", :notice => 'Cafeteria was successfully created.') }
         format.xml  { render :xml => @cafeteria, :status => :created, :location => @cafeteria }
       else
         format.html { render :action => "new" }
@@ -80,4 +91,76 @@ class CafeteriasController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def approve
+    @cafeteria = Cafeteria.find(params[:id])
+    @cafeteria.approved = params[:approved]
+    @cafeteria.voter_id = current_user.id
+    if @cafeteria.save
+      format.html { redirect_to @cafeteria, :notice => "Thanks!" }
+      format.json { render :text => 1 }
+    else
+        flash[:error] = @cafeteria.errors
+        redirect_to root_path
+    end
+  end
+
+  def blame
+    # Blame price_x for cafeteria_id
+    @cafeteria = Cafeteria.find(params[:id])
+    @product = params[:blamed]
+    # cache it god damn it
+    @top3 = SuggestedPrice.find_by_sql("SELECT price, COUNT(*) as freq FROM suggested_prices "+
+                                       "WHERE cafeteria_id=#{@cafeteria.id} AND product='#{@product}'" +
+                                       " GROUP BY price ORDER BY freq DESC LIMIT 3")
+  end
+
+
+  def search
+   # if not user_signed_in?
+        current_user = User.new
+        current_user.lat, current_user.lng = params[:c_lat], params[:c_lng]
+    #else
+     #   _update_current_user_location!
+    #end
+
+    if params[:sw_lat]
+      sw_point = GeoKit::LatLng.new(params[:sw_lat],params[:sw_lng])
+      ne_point = GeoKit::LatLng.new(params[:ne_lat],params[:ne_lng])
+      bounds = GeoKit::Bounds.new(sw_point,ne_point)
+      cafeterias = Cafeteria.in_bounds(bounds, :origin => current_user)
+    else
+      # Search queries
+      range = params[:range].present? ? params[:range].to_i : 1
+      cafeterias = Cafeteria.within(range, :origin => current_user)
+    end
+
+    product = "price_1" # change from params search
+    cafeterias = cafeterias.order("#{product} ASC")
+    cafeterias = cafeterias.limit(20)
+    @cafeterias = cafeterias.collect do |c|
+       {'cafeteria'=>{ 'id'=>c.id, 'name'=>c.name, 'address'=>c.address,'price_1'=>c.price_1,
+        'lat'=>c.lat, 'lng' => c.lng, 'distance' => c.distance[0..3].to_f }}
+    end
+
+    respond_with(@cafeterias)
+  end
+
+  def _update_current_user_location!
+    # if there is no session and no params
+    if session[:c_lat].blank? && params[:c_lat].blank?
+      current_user.geocode_me!
+      session[:c_lat], session[:c_lng] = current_user.lat, current_user.lng
+    # if we have params from mobile or browser then update
+    elsif !params[:lat].blank?
+      session[:c_lat], session[:c_lng] = params[:lat], params[:c_lng]
+      current_user.lat = session[:c_lat]
+      current_user.lng = session[:c_lng]
+    # if only session is present then use the sessio data
+    else
+      current_user.lat, current_user.lng = session[:c_lat], session[:c_lng]
+    end
+  end
+
 end
+

@@ -1,20 +1,26 @@
 class User < ActiveRecord::Base
-  require 'net/http'
-  require 'net/https'
-  
+  acts_as_mappable :default_units => :kms,
+                   :default_formula => :sphere,
+                   :distance_field_name => :distance,
+                   :lat_column_name => :lat,
+                   :lng_column_name => :lng
+
+  has_many :suggested_prices
+  has_many :cafeterias
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
          :oauthable, :openid_authenticatable
-    
+
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :sex, :birthday
-  
+
   scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
-  
+
   ROLES = %w[admin moderator customer]
   def roles=(roles)
      self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
   end
-    
+
   #
   # Facebook related
   #
@@ -31,20 +37,30 @@ class User < ActiveRecord::Base
         frids += friend['id'].to_s+","
       end
       # Create an user with a stub password.
-      User.create!(:email => data["email"], :password => Devise.friendly_token[0..7], 
+      User.create!(:email => data["email"], :password => Devise.friendly_token[0..7],
                :name => data["name"], :birthday => data["birthday"],
                :facebook_uid => data["id"], :gender => data["gender"], :friends_uids => frids,
                :network=>"Facebook",:facebook_access_token=>access_token.token)
     end
   end
-  
+
   def add_facebook_data!(data,token)
-    user.birthday = data["birthday"]
-    user.gender = data["gender"]
-    user.facebook_uid = data["facebook_uid"]
-    user.access_token = token
-    user.save
+    self.birthday = data["birthday"]
+    self.gender = data["gender"]
+    self.facebook_uid = data["facebook_uid"]
+    self.facebook_access_token = token
+    self.save
   end
-  
-  
+
+  def geocode_me!
+    loc = Geokit::Geocoders::MultiGeocoder.geocode(self.current_sign_in_ip)
+    if loc
+        self.lat, self.lng = loc.lat, loc.lng
+        self.current_address = "#{loc.street_address}, #{loc.city}"
+        self.save
+    end
+  end
+
+
 end
+

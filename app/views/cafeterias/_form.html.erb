@@ -19,31 +19,28 @@
     <%= f.label :address %><br />
     <%= f.text_field :address %>
   </div>
+
   <div class="field">
     <%= f.label :city %><br />
     <%= f.text_field :city %>
   </div>
+
+  <%= f.hidden_field :lat, :value => @cafeteria.lat %>
+  <%= f.hidden_field :lng, :value => @cafeteria.lng %>
+  <%= f.hidden_field :city, :value => @cafeteria.city %>
+  <%= f.hidden_field :address, :value => @cafeteria.address %>
+
   <div class="field">
-    <%= f.label :lat %><br />
-    <%= f.text_field :lat %>
+    <!-- add a validation, we need at least one value -->
+    <% COFFEES.keys.each do |field| %>
+    <%= f.label COFFEES[field] %><br />
+    <%= f.text_field field.to_sym %>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :ltn %><br />
-    <%= f.text_field :ltn %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :likes %><br />
-    <%= f.text_field :likes %>
-  </div>
-  <div class="field">
-    <%= f.label :pageviews %><br />
-    <%= f.text_field :pageviews %>
-  </div>
+
+
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+

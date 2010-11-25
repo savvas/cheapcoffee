@@ -1,0 +1,524 @@
+/* @override http://localhost:3000/stylesheets/style.css */
+
+/* @override http://localhost:3000/stylesheets/style.css */
+
+/* =Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html
+-------------------------------------------------------------- */
+@charset utf-8;
+/**
+ * SenCSS - Sensible Standards CSS framework
+ *
+ * Copyright (c) 2008-2009 Kilian Valkhof (kilianvalkhof.com)
+ * Visit sencss.kilianvalkhof.com for more information and changelogs.
+ * Licensed under the MIT license. http://www.opensource.org/licenses/mit-license.php
+ *
+ */
+html,body,div,span,object,iframe,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,var,fieldset,form,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,dialog,figure,footer,header,hgroup,menu,nav,section,time,mark,audio,video{vertical-align:baseline;margin:0;padding:0}
+article,aside,dialog,figure,footer,header,hgroup,menu,nav,section,time,mark,audio,video {display:block}
+body{background:#fff;color:#000;font:75%/1.5em Arial, Helvetica, "DejaVu Sans", "Liberation sans", "Bitstream Vera Sans", sans-serif;position:relative}
+textarea{font:101%/1.5em Arial, Helvetica, "DejaVu Sans", "Liberation sans", "Bitstream Vera Sans", sans-serif;border:1px solid #ccc;border-bottom-color:#eee;border-right-color:#eee;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-ms-box-sizing:border-box;width:100%;margin:0;padding:.29em 0}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:none}
+:focus{outline:none}
+a{text-decoration:underline;border:0}
+a:hover,a:focus{text-decoration:none}
+a img{border:0}
+abbr,acronym{border-bottom:1px dotted;cursor:help;font-variant:small-caps}
+address,cite,em,i{font-style:italic}
+blockquote p{margin:0 1.5em 1.5em;padding:.75em}
+code,kbd,tt{font-family:"Courier New", Courier, monospace, serif;line-height:1.5}
+del{text-decoration:line-through}
+dfn{border-bottom:1px dashed;font-style:italic}
+dl{margin:0 0 1.5em}
+dd{margin-left:1.5em}
+h1,h2,h3,h4,h5,h6{font-weight:700;padding:0}
+h1{font-size:2em;margin:0 0 .75em}
+h2{font-size:1.5em;margin:0 0 1em}
+h3{font-size:1.1666em;margin:0 0 1.286em}
+h4{font-size:1em;margin:0 0 1.5em}
+h5{font-size:.8333em;margin:0 0 1.8em}
+h6{font-size:.666em;margin:0 0 2.25em}
+img{display:inline-block;vertical-align:text-bottom}
+ins{text-decoration:overline}
+mark{background-color:#ff9;color:#000;font-style:italic;font-weight:700}
+ol{list-style:outside decimal}
+p{font-weight:300;margin:0 0 1.5em}
+pre{font-family:"Courier New", Courier, monospace, serif;margin:0 0 1.5em}
+sub{top:.4em;font-size:.85em;line-height:1;position:relative;vertical-align:baseline}
+sup{font-size:.85em;line-height:1;position:relative;bottom:.5em;vertical-align:baseline}
+ul{list-style:outside disc}
+ul,ol{margin:0 0 1.5em 1.5em;padding:0}
+li ul,li ol{margin:0 0 1.5em 1.5em;padding:0}
+table{border-collapse:collapse;border-spacing:0;margin:0 0 1.5em;padding:0}
+caption{font-style:italic;text-align:left}
+tr.alt td{background:#eee}
+td{border:1px solid #000;vertical-align:middle;padding:.333em}
+th{font-weight:700;vertical-align:middle;padding:.333em}
+button{cursor:pointer;display:block;font-size:1em;height:2em;line-height:1.5em;margin:1.75em 0 0;padding:0 .5em}
+button::-moz-focus-inner{border:0}
+fieldset{border:0;position:relative;margin:0 0 1.5em;padding:1.5em 0 0}
+fieldset fieldset{clear:both;margin:0 0 1.5em;padding:0 0 0 1.5em}
+input{border:1px solid #ccc;border-bottom-color:#eee;border-right-color:#eee;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-ms-box-sizing:border-box;font-size:1em;height:1.5em;line-height:1.5em;width:100%;margin:0 0 .75em;padding:.29em 0}
+input[type=file]{height:2.25em;padding:0}
+select{border:1px solid #ccc;border-bottom-color:#eee;border-right-color:#eee;font-size:1em;height:2.25em;_margin:0 0 1.3em;margin:0 0 .8em;padding:.2em 0 0}
+optgroup{font-weight:700;font-style:normal;text-indent:.2em}
+optgroup + optgroup{margin-top:1em}
+option{font-size:1em;height:1.5em;text-indent:1em;padding:0}
+label{cursor:pointer;display:block;height:auto;line-height:1.4em;width:100%;margin:0;padding:0}
+label input{background:0;border:0;height:1.5em;line-height:1.5em;width:auto;margin:0 .5em 0 0;padding:0}
+legend{font-size:1.1666em;font-weight:700;left:0;margin:0;padding:0}
+dt,strong,b{font-weight:700}
+
+
+
+/*===============================
+CONTENTS
+--------
+1. Global Styles
+===============================*/
+
+
+/*===============================
+1. Global Styles - start
+===============================*/
+body{
+    background:#784202 url('../images/bg.jpg') center top no-repeat;
+    font-family:Helvetica, Arial, Verdana;
+    font-size:12px;
+    color:#FFF;
+}
+a:link, a:visited{
+    text-shadow:0 0 2px #000;
+    -moz-text-shadow:0 0 2px #000;
+    -webkit-text-shadow:0 0 2px #000;
+    color:#FFF;
+    text-decoration:none;
+}
+a:active{
+    color:#cac030;
+}
+a:hover{
+    text-decoration:underline;
+}
+
+#header, #main, #footer{
+    float:left;
+    width:100%;
+    padding: 10px 0px;
+}
+#main {
+	min-height: 500px;
+}
+/*Header*/
+div#header h1 a{
+    float:left;
+    text-indent:-9999px;
+    background:url('../images/logo.png');
+    width:161px;
+    height:60px;
+}
+div#header div.connect{
+    float:right;
+}
+
+/*Main area*/
+div#main{
+    margin:20px 0 30px;
+}
+div#main div.map-container{
+    position:relative;
+    float:left;
+    width:690px;
+    height:390px;
+    padding:5px;
+    background:#FFF;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    box-shadow:0 0 5px #000;
+    -moz-box-shadow:0 0 5px #000;
+    -webkit-box-shadow:0 0 5px #000;
+}
+div#main div.map-container #map{
+    width:690px;
+    height:390px;
+}
+div#main div.map-container #map a{
+    text-shadow:none;
+    -moz-text-shadow:none;
+    -webkit-text-shadow:none;
+}
+/*Add coffe shop form*/
+div#main div.map-container div.add-coffeeshop{
+    position:absolute;
+    width:670px;
+    height:370px;
+    top:5px;
+    left:5px;
+    background:url('../images/whiteBG.png');
+    color:#222;
+    padding:10px;
+    display:none;
+}
+div#main div.map-container div.add-coffeeshop a.close{
+    position:absolute;
+    width:16px;
+    height:16px;
+    top:10px;
+    right:10px;
+    background:url('../images/closeSprite.png');
+    text-indent:-9999px;
+}
+div#main div.map-container div.add-coffeeshop a.close:hover{
+    background-position:0 -16px;
+}
+div#main div.map-container div.add-coffeeshop p{
+    margin:0 0 10px 10px;
+}
+div#main div.map-container div.add-coffeeshop p.text{
+    font-size:20px;
+    color:#784202;
+    margin:0 0 20px 0;
+    border-bottom:1px solid #784202;
+    padding-bottom:5px;
+}
+div#main div.map-container div.add-coffeeshop label{
+    font-weight:bold;
+    color:#333;
+    width:200px;
+}
+div#main div.map-container div.add-coffeeshop input, div#main div.map-container div.add-coffeeshop select{
+    height:30px;
+    line-height:30px;
+    background:#FFF;
+    color:#784202;
+    border:1px solid #CCC;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    padding:0 0 0 5px;
+    font-size:16px;
+}
+div#main div.map-container div.add-coffeeshop input.loading{
+    background:url('../images/ajaxLoad.gif') no-repeat 630px 6px;
+}
+div#main div.map-container div.add-coffeeshop select{
+    cursor:pointer;
+    width:200px;
+}
+div#main div.map-container div.add-coffeeshop p.submit{
+    text-align:right;
+}
+div#main div.map-container div.add-coffeeshop p.submit input{
+    cursor:pointer;
+    height:40px;
+    line-height:40px;
+    width:200px;
+    color:#000;
+    border:0;
+    font-size:12px;
+    font-weight:bold;
+    text-shadow:1px 1px 0 #ebe594;
+    -moz-text-shadow:1px 1px 0 #ebe594;
+    -webkit-text-shadow:1px 1px 0 #ebe594;
+    box-shadow:0 0 5px #000;
+    -moz-box-shadow:0 0 5px #000;
+    -webkit-box-shadow:0 0 5px #000;
+    background:#fff897;
+    background: -moz-linear-gradient(top,  #fff897,  #cac030);
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff897), to(#cac030));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff897', endColorstr='#cac030');
+}
+div#main div.map-container div.add-coffeeshop p.submit input:hover{
+    background:#cac030;
+    background: -moz-linear-gradient(top,  #cac030,  #fff897);
+    background: -webkit-gradient(linear, left top, left bottom, from(#cac030), to(#fff897));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cac030', endColorstr='#fff897');
+}
+div#main div.map-container div.add-coffeeshop p.submit.sending input{
+    cursor:default;
+    background:#CCC;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+    text-shadow:none;
+    -moz-text-shadow:none;
+    -webkit-text-shadow:none;
+}
+div#main div.map-container div.add-coffeeshop p.submit img.loading{
+    margin-right:10px;
+    display:none;
+}
+div#main div.map-container div.add-coffeeshop p.submit.sending img.loading{
+    display:inline;
+}
+/*Sidebar*/
+div.sidebar{
+    float:left;
+    width:220px;
+    margin-left:20px;
+}
+div.sidebar a.add-button{
+    display:block;
+    text-align:center;
+    width:100%;
+    height:40px;
+    line-height:40px;
+    color:#000;
+    text-decoration:none;
+    font-weight:bold;
+    text-shadow:1px 1px 0 #ebe594;
+    -moz-text-shadow:1px 1px 0 #ebe594;
+    -webkit-text-shadow:1px 1px 0 #ebe594;
+    box-shadow:0 0 5px #000;
+    -moz-box-shadow:0 0 5px #000;
+    -webkit-box-shadow:0 0 5px #000;
+    background:#fff897;
+    background: -moz-linear-gradient(top,  #fff897,  #cac030);
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff897), to(#cac030));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff897', endColorstr='#cac030');
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+}
+div.sidebar a.add-button span.add{
+    display:inline;
+}
+div.sidebar a.add-button span.view{
+    display:none;
+}
+div.sidebar a.add-button.close span.add{
+    display:none;
+}
+div.sidebar a.add-button.close span.view{
+    display:inline;
+}
+div.sidebar a.add-button:hover{
+    background:#cac030;
+    background: -moz-linear-gradient(top,  #cac030,  #fff897);
+    background: -webkit-gradient(linear, left top, left bottom, from(#cac030), to(#fff897));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cac030', endColorstr='#fff897');
+}
+div.sidebar a.add-button.close{
+    text-shadow:none;
+    -moz-text-shadow:none;
+    -webkit-text-shadow:none;
+    background:#FFF;
+    background: -moz-linear-gradient(top,  #FFF,  #CCC);
+    background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#CCC));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFF', endColorstr='#CCC');
+}
+div.sidebar a.add-button.close:hover{
+    background:#CCC;
+    background: -moz-linear-gradient(top,  #CCC,  #FFF);
+    background: -webkit-gradient(linear, left top, left bottom, from(#CCC), to(#FFF));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#CCC', endColorstr='#FFF');
+}
+div.sidebar p.move-around{
+    text-align:center;
+    font-size:12px;
+    line-height:16px;
+    border-top:1px solid #feb55d;
+    border-bottom:1px solid #feb55d;
+    padding:5px 0;
+    margin-top:20px;
+    text-shadow:0 0 2px #000;
+    -moz-text-shadow:0 0 2px #000;
+    -webkit-text-shadow:0 0 2px #000;
+}
+div.sidebar div.lists p.tabs{
+    border-bottom:1px solid #FFF;
+    float:left;
+    width:100%;
+    margin:0;
+}
+div.sidebar div.lists p.tabs a{
+    float:left;
+    padding:5px;
+    color:#2d1c09;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:13px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-topright:5px;
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    background:#9e6423;
+    background: -moz-linear-gradient(top,  #9e6423,  #553611);
+    background: -webkit-gradient(linear, left top, left bottom, from(#9e6423), to(#553611));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9e6423', endColorstr='#553611');
+    text-shadow:1px 1px 0 #795d3d;
+    -moz-text-shadow:1px 1px 0 #795d3d;
+    -webkit-text-shadow:0 0 1px #795d3d;
+    margin-right:1px;
+}
+div.sidebar div.lists p.tabs a.active, div.sidebar div.lists p.tabs a:hover{
+    color:#543511;
+    background:#FFF;
+    background: -moz-linear-gradient(top,  #FFF,  #CCC);
+    background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#CCC));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFF', endColorstr='#CCC');
+    text-shadow:none;
+    -moz-text-shadow:none;
+    -webkit-text-shadow:none;
+}
+div.sidebar div.lists table{
+    float:left;
+    width:100%;
+    display:none;
+}
+div.sidebar div.lists table.active{
+    display:block;
+}
+div.sidebar div.lists table td{
+    border:0;
+    text-shadow:0 0 2px #000;
+    -moz-text-shadow:0 0 2px #000;
+    -webkit-text-shadow:0 0 2px #000;
+}
+ 
+/*Footer*/
+div#footer{
+    padding-top:10px;
+    border-top:1px solid #feb55d;
+    text-align:center;
+}
+
+/*===============================
+1. Global Styles - end
+===============================*/
+
+/* @group myform */
+form.myform {
+	
+}
+.myform label {
+	font-size: 16px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+form.myform input {
+	font-size: 16px;
+	padding: 0px !important;
+}
+	input.suggest_price {
+		background: #66FF66;
+		width: 200px;
+		float: right;
+		display: block;
+		color: #333;
+		    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border: 1px solid #ccc;
+    	height: 30px;
+    	line-height: 30px;
+    	cursor: pointer;
+	}
+		input.suggest_price:hover {
+			background: #00FF33;
+		}
+
+
+/* @end */
+
+/* @group Cafeteria#blame */
+h4 {
+	font-size: 18px;
+	margin-bottom: 0px;
+}
+ul#blame {
+	list-style: none;
+	display: block;
+	overflow: hidden;
+	padding: 0px;
+	margin: 0px;
+}
+	ul#blame li {
+		display: block;
+		overflow: hidden;
+		float: left;
+		width: 150px;
+		margin: 10px;
+		background: #CCFFFF;
+		color: #222;
+		text-align: center;
+		padding: 5px;
+		border: 1px solid #ccc;
+		    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+
+	}
+		ul#blame li:hover {
+			background: #FFFF99;
+		}
+	ul#blame li span {
+		display: block;
+		clear: both;
+	}
+
+	ul#blame li span.price {
+		font-size: 32px;
+		padding-top: 10px;
+		margin-bottom: 10px;
+	}
+	ul#blame li span.votes {
+		font-size: 12px;
+	}
+	
+	ul#blame input.vote_it {
+		background: #6699FF;
+		height: 30px;
+		color: #222;
+		font-size: 14px;
+		cursor: pointer;
+	}
+		ul#blame input.vote_it:hover {
+			background: #66FF66;
+		}
+	
+
+
+/* @end */
+
+/* @group Cafeteria#show */
+h1 {
+	margin-bottom: 10px;
+	font-size: 40px;
+	font-weight: normal;
+}
+h2 {
+	margin-bottom: 0px;
+}
+table#cafe_pricelist {
+	width: 400px;	
+}
+	table#cafe_pricelist td {	
+		border: 1px solid #784202;
+		padding: 5px;
+		font-size: 16px;
+	}
+	table#cafe_pricelist td.confirm {
+		font-size: 12px;
+		color: #ddd;
+	}
+		table#cafe_pricelist td.confirm a{
+			color: #66CC33;
+			font-size: 16px;
+		}
+	table#cafe_pricelist td.blame a{
+		color: #FFA07A;
+	}		
+		
+
+
+/* @end */
+
+
+
+/* DOXARAS dirty fix */
+div.gmnoprint {
+  color: #000 !important;
+}
