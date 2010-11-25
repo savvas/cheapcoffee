@@ -1,7 +1,4 @@
 Cheapcoffee::Application.routes.draw do
-
-  resources :cafeterias
-
   devise_for :users
 
   # The priority is based upon order of creation:
@@ -19,16 +16,17 @@ Cheapcoffee::Application.routes.draw do
   #   resources :products
 
   resources :cafeterias do
+    collection do
+      get 'reverse_geocode'
+      get 'geocode'
+    end
+    
     member do
       get 'approve'
       get 'blame'
       post 'check_location'
     end
-
-    collection do
-      # get 'search'
-    end
-
+    
     resources :suggested_prices
   end
 

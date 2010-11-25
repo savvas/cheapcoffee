@@ -114,7 +114,20 @@ class CafeteriasController < ApplicationController
                                        "WHERE cafeteria_id=#{@cafeteria.id} AND product='#{@product}'" +
                                        " GROUP BY price ORDER BY freq DESC LIMIT 3")
   end
+  
+  def reverse_geocode
+    res = Rails.cache.fetch(params[:pair]){ Geokit::Geocoders::GoogleGeocoder.reverse_geocode(params[:pair]) }
+    render :text => "#{res.street_address} * #{res.city}"
+  rescue
+    render :text => "*"
+  end
 
+  def geocode
+    loc = Rails.cache.fetch(params[:search]){ Geokit::Geocoders::Geocoder.google_geocoder("#{params[:search]}") }
+    render :text => "#{loc.lat},#{loc.lng}"
+  rescue
+    render :text => "0,0"
+  end
 
   def search
    # if not user_signed_in?

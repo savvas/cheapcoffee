@@ -32,7 +32,7 @@
     	    Hello <%= current_user.email %>
     	    <%= link_to "Sign out", destroy_user_session_path %>
     	  <% else %>
-			    <%= link_to image_tag("fbConnect.jpg"), user_oauth_authorize_url(:facebook), :class => "fb-connect" %>
+			    <%= link_to image_tag("fblogin.png"), user_oauth_authorize_url(:facebook), :class => "fb-connect" %>
     	  <% end %>
 			</div>
 		</div>

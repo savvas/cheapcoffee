@@ -1,57 +1,76 @@
 
 
 <div id="main">
+	<form accept-charset="utf-8" onsubmit="return false;">
+		
+      <label for="search"></label><input type="text" name="search" value="" id="search">
+
+		<p><input type="submit" value="Continue &rarr;" onclick="_search();"></p>
+	</form>
+	
 	<div class="map-container">
 		<div id="map"></div>
 		<div class="add-coffeeshop">
 			<a href="#" class="close">Close</a>
 			<p class="text">Give us some info on this cup of coffee you just enjoyed</p>
+			<form>
 			<p>
 				<label for="coffeeShopAddr">Address:</label>
-				<input type="text" name="_address" value="Start typing an address and we'll find it" title="Start typing an address and we'll find it" id="coffeeShopAddr" />
+				<input type="text" name="cafeteria[address]" value="Start typing an address and we'll find it" title="Start typing an address and we'll find it" id="coffeeShopAddr" />
+			</p>
+			<p>
+				<label for="coffeeShopCity">City:</label>
+				<input type="text" name="cafeteria[city]" value="In which city?" title="In which city ?" id="coffeeShopCity" />
 			</p>
 			<p>
 				<label for="coffeeShopName">Name:</label>
-				<input type="text" name="_name" value="Add the name or a short description of the coffee shop" title="Add the name or a short description of the coffee shop" id="coffeeShopName" />
+				<input type="text" name="cafeteroa[name]" value="Add the name or a short description of the coffee shop" title="Add the name or a short description of the coffee shop" id="coffeeShopName" />
 			</p>
 			<p>
-				<label for="coffeeShopType">Coffee type:</label>
-				<select name="_type" id="coffeeShopType">
-					<option value="frappe" selected="selected">Frappe</option>
-					<option value="cappuccino">Cappuccino</option>
-					<option value="espresso">Freddo</option>
-				</select>
+				<div class="grid_3 alpha">
+					<label for="coffeeShopType">Coffee type:</label>
+					<select name="_type" id="coffeeShopType">
+						<option value="frappe" selected="selected">Frappe</option>
+						<option value="cappuccino">Cappuccino</option>
+						<option value="espresso">Freddo</option>
+					</select>
+				</div>
+				
+				<div class="grid_4 omega">
+					<label for="coffeeShopPrice">Price (approximate):</label>
+					<select name="_price" id="coffeeShopPrice">
+						<option value="0.5">0,50€</option>
+						<option value="1">1,00€</option>
+						<option value="1.5">1,50€</option>
+						<option value="2">2,00€</option>
+						<option value="2.5">2,50€</option>
+						<option value="3">3,00€</option>
+						<option value="3.5">3,50€</option>
+						<option value="4">4,00€</option>
+						<option value="4.5">4,50€</option>
+						<option value="5" selected="selected">5,00€</option>
+						<option value="5.5">5,50€</option>
+						<option value="6">6,00€</option>
+						<option value="6.5">6,50€</option>
+						<option value="7">7,00€</option>
+						<option value="7.5">7,50€</option>
+						<option value="8">8,00€</option>
+						<option value="8.5">8,50€</option>
+						<option value="9">9,00€</option>
+						<option value="9.5">9,50€</option>
+						<option value="10">10,0€</option>
+						<option value="100">10+€? Seriously, that's not cheap at all!</option>
+					</select>
+				</div>
 			</p>
-			<p>
-				<label for="coffeeShopPrice">Price (approximate):</label>
-				<select name="_price" id="coffeeShopPrice">
-					<option value="0.5">0,50€</option>
-					<option value="1">1,00€</option>
-					<option value="1.5">1,50€</option>
-					<option value="2">2,00€</option>
-					<option value="2.5">2,50€</option>
-					<option value="3">3,00€</option>
-					<option value="3.5">3,50€</option>
-					<option value="4">4,00€</option>
-					<option value="4.5">4,50€</option>
-					<option value="5" selected="selected">5,00€</option>
-					<option value="5.5">5,50€</option>
-					<option value="6">6,00€</option>
-					<option value="6.5">6,50€</option>
-					<option value="7">7,00€</option>
-					<option value="7.5">7,50€</option>
-					<option value="8">8,00€</option>
-					<option value="8.5">8,50€</option>
-					<option value="9">9,00€</option>
-					<option value="9.5">9,50€</option>
-					<option value="10">10,0€</option>
-					<option value="100">10+€? Seriously, that's not cheap at all!</option>
-				</select>
-			</p>
+			<input type="hidden" name="cafeteria[lat]" value="" id="lat">
+			<input type="hidden" name="cafeteria[lng]" value="" id="lng">
+			
 			<p class="submit">
 				<img src="/images/ajax-loader.gif" alt="Loading" class="loading" />
 				<input type="button" value="Submit this coffee shop" />
 			</p>
+			</form>
 		</div>
 	</div>
 	<div class="sidebar">
@@ -64,10 +83,8 @@
 				<a href="#" class="active" rel="cheap-list">CHEAPEST</a>
 				<a href="#" rel="near-list">NEAREST</a>
 			</p>
-			<table class="cheap-list active">
-			</table>
-			<table class="near-list">
-			</table>
+			<table class="cheap-list active"></table>
+			<table class="near-list"></table>
 		</div>
 	</div>
 </div>
