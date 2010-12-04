@@ -23,45 +23,36 @@
 
 
 <body>
-	<div class="container_12">
+  <div id="universe">
+  	<div class="container_12" id="world">
+  		<div id="header" class="grid_12">
+  			<h1><a href="/">Cheapcoffee.gr | Cheap, near, quick</a></h1>
+  			<div class="connect">
+  			  <% if user_signed_in? %>
+      	    Hello <%= current_user.email %>
+      	    <%= link_to "Sign out", destroy_user_session_path %>
+      	  <% else %>
+  			    <%= link_to image_tag("fblogin.png"), user_oauth_authorize_url(:facebook), :class => "fb-connect" %>
+      	  <% end %>
+  			</div>
+  		</div><!-- end header -->
 
-		<div id="header">
-			<h1><a href="/">Cheapcoffee.gr | Cheap, near, quick</a></h1>
-			<div class="connect">
-			  <% if user_signed_in? %>
-    	    Hello <%= current_user.email %>
-    	    <%= link_to "Sign out", destroy_user_session_path %>
-    	  <% else %>
-			    <%= link_to image_tag("fblogin.png"), user_oauth_authorize_url(:facebook), :class => "fb-connect" %>
-    	  <% end %>
-			</div>
-		</div>
+      <div id="main" class="grid_12">
+        <%= yield %>
+      </div>
+      
+  		<div id="footer" class="grid_12">
+  		  <%= link_to "About / Team", about_path %>
+  			&middot;
+  			<%= link_to "FAQ", faq_path %>
+  			&middot;
+  			<%= link_to "Contact", contact_path %>
+  		</div><!-- end footer -->
+  	</div><!-- end container  world-->
+	</div><!-- end universe -->  
 
-    <div id="main">
-      <%= yield %>
-    </div>
-		<div id="footer">
-		  <%= link_to "About / Team", about_path %>
-			&middot;
-			<%= link_to "FAQ", faq_path %>
-			&middot;
-			<%= link_to "Contact", contact_path %>
-		</div>
-
-	</div><!-- end container -->
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-19225596-2']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
+	
+	<%= render :partial => 'shared/google_analytics' %>
 </body>
 </html>
 

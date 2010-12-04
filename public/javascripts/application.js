@@ -66,7 +66,7 @@ $(document).ready(function(){
     });
 
     //Toggle 'add cafeteria' form
-    $('div.sidebar a.add-button, div.add-coffeeshop a.close').click(function(){
+    $('a.add-button, a.close').click(function(){
         if ($(this).hasClass('close')){
             _hideAddCoffeeShopForm();
         } else {
@@ -294,8 +294,8 @@ function _resetForm(){
 
 // Create the cafeteria lists in the right
 function _createLists(data){ d=data;
-    templch='{{#cafeterias}}<tr rel="{{ cafeteria/lat }},{{ cafeteria/lng }}"><td class="number">{{ cafeteria/index }}</td><td class="name">{{> link }}</td><td class="price">{{ cafeteria/price_1 }}  &#8364;</td></tr>{{/cafeterias}}';
-    templne='{{#cafeterias}}<tr rel="{{ cafeteria/lat }},{{ cafeteria/lng }}"><td class="number">{{ cafeteria/index }}</td><td class="name">{{> link }}</td><td class="distance">{{ cafeteria/distance }} km.</td></tr>{{/cafeterias}}';
+    templch='{{#cafeterias}}<tr rel="{{ cafeteria/lat }},{{ cafeteria/lng }}"><td class="name">{{> link }}</td><td class="price">{{ cafeteria/price_1 }}  &#8364;</td></tr>{{/cafeterias}}';
+    templne='{{#cafeterias}}<tr rel="{{ cafeteria/lat }},{{ cafeteria/lng }}"><td class="name">{{> link }}</td><td class="distance">{{ cafeteria/distance }} km.</td></tr>{{/cafeterias}}';
 
     row_template_cheap = Handlebars.compile(templch);
     row_template_near = Handlebars.compile(templne);
