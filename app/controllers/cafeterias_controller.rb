@@ -1,16 +1,9 @@
 class CafeteriasController < ApplicationController
-  before_filter :authenticate_user!, :except => [:index, :show, :search]
+  before_filter :authenticate_user!, :only => [:edit, :create, :update, :destroy, :approve, :blame]
   respond_to :html, :xml, :json # class level
 
-  # GET /cafeterias
-  # GET /cafeterias.xml
-  def index
-    #@cafeterias = Cafeteria.limit(6)
-    #respond_with(@cafeterias)
-  end
+  def index; end
 
-  # GET /cafeterias/1
-  # GET /cafeterias/1.xml
   def show
     @cafeteria = Cafeteria.find(params[:id])
     respond_with(@cafeteria)
@@ -24,7 +17,6 @@ class CafeteriasController < ApplicationController
     @existing = Cafeteria.within(0.25, :origin => current_user)
     # reverse geocode
     geostr = "#{current_user.lat},#{current_user.lng}"
-
 
     @cafeteria = Cafeteria.new
     begin
@@ -130,27 +122,24 @@ class CafeteriasController < ApplicationController
   end
 
   def search
-   # if not user_signed_in?
-        current_user = User.new
-        current_user.lat, current_user.lng = params[:c_lat], params[:c_lng]
-    #else
-     #   _update_current_user_location!
-    #end
+    _update_current_user_location_session!
 
     if params[:sw_lat]
       sw_point = GeoKit::LatLng.new(params[:sw_lat],params[:sw_lng])
       ne_point = GeoKit::LatLng.new(params[:ne_lat],params[:ne_lng])
       bounds = GeoKit::Bounds.new(sw_point,ne_point)
-      cafeterias = Cafeteria.in_bounds(bounds, :origin => current_user)
+      cafeterias = Cafeteria.in_bounds(bounds, :origin => [session[:c_lat], session[:c_lng]])
     else
       # Search queries
       range = params[:range].present? ? params[:range].to_i : 1
-      cafeterias = Cafeteria.within(range, :origin => current_user)
+      cafeterias = Cafeteria.within(range, :origin => [session[:c_lat], session[:c_lng]])
     end
-
-    product = "price_1" # change from params search
+    # more search params
+    product = params[:product] || "price_1" # change from params search
     cafeterias = cafeterias.order("#{product} ASC")
     cafeterias = cafeterias.limit(20)
+    
+    # create a hash
     @cafeterias = cafeterias.collect do |c|
        {'cafeteria'=>{ 'id'=>c.id, 'name'=>c.name, 'address'=>c.address,'price_1'=>c.price_1,
         'lat'=>c.lat, 'lng' => c.lng, 'distance' => c.distance[0..3].to_f }}
@@ -159,19 +148,22 @@ class CafeteriasController < ApplicationController
     respond_with(@cafeterias)
   end
 
-  def _update_current_user_location!
+  private
+  def _update_current_user_location_session!
     # if there is no session and no params
     if session[:c_lat].blank? && params[:c_lat].blank?
-      current_user.geocode_me!
-      session[:c_lat], session[:c_lng] = current_user.lat, current_user.lng
+      current_ip = current_user ? current_user.current_sign_in_ip : request.remote_ip 
+      loc = Geokit::Geocoders::MultiGeocoder.geocode(current_ip)
+      if loc
+        session[:c_lat], session[:c_lng] = loc.lat, loc.lng
+      else
+        # use some defaults
+      end
+      cookies[:c_lat], cookies[:c_lng] = session[:c_lat], session[:c_lng]
     # if we have params from mobile or browser then update
-    elsif !params[:lat].blank?
-      session[:c_lat], session[:c_lng] = params[:lat], params[:c_lng]
-      current_user.lat = session[:c_lat]
-      current_user.lng = session[:c_lng]
-    # if only session is present then use the sessio data
-    else
-      current_user.lat, current_user.lng = session[:c_lat], session[:c_lng]
+    elsif !params[:c_lat].blank?
+      session[:c_lat], session[:c_lng] = params[:c_lat], params[:c_lng]
+      cookies[:c_lat], cookies[:c_lng] = session[:c_lat], session[:c_lng] # set a cookie so we do not detect the user again
     end
   end
 

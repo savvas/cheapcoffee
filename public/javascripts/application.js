@@ -21,19 +21,20 @@ var opts = {
 var setLoc = 0,
     cur_lat = null,
     cur_lng = null,
-    cur_address = null;
+    cur_address = null,
+    infowindow = null;
 //Global map object, holds all settings related to the google map thingy
 var mapObj = {
-        map: new Object(),
-        initOptions: {
-            navigationControl: true,
-            mapTypeControl: false,
-            scaleControl: false,
-            zoom: 15,
-            center: new google.maps.LatLng(37.974290,23.730396), //should be fb location :)
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-    };
+     map: new Object(),
+     initOptions: {
+         navigationControl: true,
+         mapTypeControl: false,
+         scaleControl: false,
+         zoom: 15,
+         center: new google.maps.LatLng(37.974290,23.730396), // Syntagma Square as default
+         mapTypeId: google.maps.MapTypeId.ROADMAP
+     }
+};
 
 /*===============================
 1. Vars - end
@@ -44,49 +45,14 @@ var mapObj = {
 /*===============================
 2. Jquery Event Binding - start
 ===============================*/
-var infowindow = null;
-
-function show_cafeterias_on_map(map, data) {
-  infowindow = new google.maps.InfoWindow({
-    content: "holding..."
-  });
-
-
-  var infowindow = new google.maps.InfoWindow();
-  var markers_array = [];
-
-  for(i=0; i < data.length; i++) {
-    cafe = data[i].cafeteria;
-    if ((cafe.name).indexOf('Starbucks', 0) > -1) {
-      icon_path = '/images/starbucks.png';
-    } else {
-      icon_path = '/images/coffeePin.png';
-    }
-
-    cafe_point = new google.maps.LatLng(cafe.lat+0,cafe.lng+0);
-    var marker = new google.maps.Marker({
-        position: cafe_point,
-        title: cafe.name,
-        icon: icon_path,
-        cafe_name: cafe.name+''
-    });
-    markers_array.push(marker);
-  }
-
-  for(i=0; i < markers_array.length; i++) {
-    cur_marker = markers_array[i];
-    google.maps.event.addListener(cur_marker, 'click', function() {
-      infowindow.setContent(this.cafe_name);
-      infowindow.open(map, this);
-    });
-    cur_marker.setMap(map);
-  }
-  _createLists(data);
-}
-
 
 $(document).ready(function(){
-
+   
+    // if we know where we are :)
+    if ($.cookie('c_lat')) {
+       mapObj.initOptions.center = new google.maps.LatLng(parseFloat($.cookie('c_lat')),parseFloat($.cookie('c_lng')));
+    }
+    
     //Cancel click on ajax links
     $('a[href=#]').click(function(){ return false; });
 
@@ -95,13 +61,8 @@ $(document).ready(function(){
 
     map = mapObj.map;
 
-    google.maps.event.addListener(mapObj.map, 'zoom_changed', function() {
-      // we are always a click back
-      _setCurrentLocation();
-    });
-
-    google.maps.event.addListener(mapObj.map, 'dragend', function() {
-      _setCurrentLocation();
+    google.maps.event.addListener(mapObj.map, 'tilesloaded', function() {
+      _setCurrentLocationAndFetchResults(false);
     });
 
     //Toggle 'add cafeteria' form
@@ -135,7 +96,7 @@ $(document).ready(function(){
     $('p.submit input', 'div.add-coffeeshop').click(_submitCoffeeForm);
     
     // Focus map on list
-    $("table.cheap-list tr").live('click',_changeFocus(event));
+    $("table.cheap-list tr a").live('click',_changeFocus(event));
 });
 /*===============================
 2. Jquery Event Binding - end
@@ -146,25 +107,57 @@ $(document).ready(function(){
 /*===============================
 3. Functions - start
 ===============================*/
+function show_cafeterias_on_map(map, data) {
+  infowindow = new google.maps.InfoWindow({
+    content: "holding..."
+  });
+
+  var infowindow = new google.maps.InfoWindow();
+  var markers_array = [];
+
+  for(i=0; i < data.length; i++) {
+    cafe = data[i].cafeteria;
+    icon_path = ((cafe.name).indexOf('Starbucks', 0) > -1) ? '/images/starbucks.png' : '/images/coffeePin.png';
+
+    cafe_point = new google.maps.LatLng(cafe.lat+0,cafe.lng+0);
+    var marker = new google.maps.Marker({
+        position: cafe_point,
+        title: cafe.name,
+        icon: icon_path,
+        cafe_name: cafe.name+''
+    });
+    markers_array.push(marker);
+  }
+
+  for(i=0; i < markers_array.length; i++) {
+    cur_marker = markers_array[i];
+    google.maps.event.addListener(cur_marker, 'click', function() {
+      infowindow.setContent(this.cafe_name);
+      infowindow.open(map, this);
+    });
+    cur_marker.setMap(map);
+  }
+  // Create the list in the right
+  _createLists(data);
+}
+
 // Change focus of map
 function _changeFocus(event){
-   console.log(1);
+   //console.log(1);
    return false;
 }
 
 // Search 
 function _search(){
-   search = $('#search').val();
-   alert(search);
    $.ajax({
       url: '/cafeterias/geocode',
-      data: {search: search},
+      data: {search: $('#search').val()},
       success: function(data){
          pair = data.split(',');
          if (pair[0]){
             loc = new google.maps.LatLng(pair[0],pair[1]);
-            map.setCenter(loc); 
-            _setCurrentLocation();      
+            mapObj.map.setCenter(loc); 
+            _setCurrentLocationAndFetchResults(false);      
          } else {
             alert("No results found");
          }
@@ -173,69 +166,57 @@ function _search(){
    return false;
 }
 
-//Retrieve user's location
+//Google maps initialization function
+function initializeGMaps(){ 
+    mapObj.map = new google.maps.Map($('#map')[0], mapObj.initOptions);
+    //Retrieve user's location
+    _setUserLocation(); 
+}
+
+
 function _setUserLocation(){
     var location;
+    // we know already where the user is
+    if ( $.cookie('c_lat') ) { 
+       location = new google.maps.LatLng(parseFloat($.cookie('c_lat')), parseFloat($.cookie('c_lng')));
     // Try W3C Geolocation (Preferred)
-    if (navigator.geolocation) {
+    } else if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             location = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-            mapObj.map.setCenter(location);
-            mapObj.map.setZoom(14);
-            _setCurrentLocation(position.coords.latitude, position.coords.longitude);
         });
-        setLoc == 1;
     // Try Google Gears Geolocation
     } else if (google.gears) {
         var geo = google.gears.factory.create('beta.geolocation');
         geo.getCurrentPosition(function(position) {
             location = new google.maps.LatLng(position.latitude,position.longitude);
-            mapObj.map.setCenter(location);
-            mapObj.map.setZoom(14);
-            cur_lat = c.lat();
-            cur_lng = c.lng();
         });
-        setLoc == 1;
-        // Browser doesn't support Geolocation, set Athens as center
     } else {
-       
+       // Browser doesn't support Geolocation, set Athens as center
+       // other location detection
+       // the backend will create a cookie with lan/lng from the geocoded IP of the user
     }
-    
+    mapObj.map.setCenter(location);
+    mapObj.map.setZoom(14);
 }
 
-function _setCurrentLocation(){
+function _setCurrentLocationAndFetchResults(detect_location) {
    ne = mapObj.map.getBounds().getNorthEast();
    sw = mapObj.map.getBounds().getSouthWest();
    c = mapObj.map.getCenter();
    cur_lat = c.lat();
    cur_lng = c.lng();
    ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+
-              '&ne_lng='+ne.lng()+'&c_lat='+c.lat()+'&c_lng='+c.lng();
+              '&ne_lng='+ne.lng();
+   // we announce the center of the map only when we know that this is where the user is!
+   // this happens on first load
+   if (detect_location){ alert('send user location');
+      ajax_url += '&c_lat='+c.lat()+'&c_lng='+c.lng();
+   }
    $.getJSON(ajax_url, function(data){
-     show_cafeterias_on_map(map, data);
+      show_cafeterias_on_map(map, data);
    });
 }
 
-
-//Google maps initialization function
-function initializeGMaps(){
-    mapObj.map = new google.maps.Map($('#map')[0], mapObj.initOptions);
-    _setUserLocation();
-    setTimeout('_initData()', 3000);
-}
-
-function _initData(){ 
-   if (setLoc==0){
-      sw = mapObj.map.getBounds().getSouthWest();
-      ne = mapObj.map.getBounds().getNorthEast();
-      c = mapObj.map.getCenter();
-      ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+
-                 '&ne_lng='+ne.lng()+'&c_lat='+c.lat()+'&c_lng='+c.lng();
-      $.getJSON(ajax_url, function(data){
-        show_cafeterias_on_map(mapObj.map, data);
-      });
-   }
-}
 
 //Show 'add cafeteria' form
 function _showAddCoffeeShopForm(){
@@ -310,7 +291,7 @@ function _resetForm(){
     $form.find('#coffeeShopPrice').val('5');
     $form.find('p.submit').removeClass('sending');
 }
-var d;
+
 // Create the cafeteria lists in the right
 function _createLists(data){ d=data;
     templch='{{#cafeterias}}<tr rel="{{ cafeteria/lat }},{{ cafeteria/lng }}"><td class="number">{{ cafeteria/index }}</td><td class="name">{{> link }}</td><td class="price">{{ cafeteria/price_1 }}  &#8364;</td></tr>{{/cafeterias}}';
@@ -341,5 +322,41 @@ function _createLists(data){ d=data;
 
 /*===============================
 3. Functions - end
+===============================*/
+
+/*===============================
+4. Plugins - start
+===============================*/
+jQuery.cookie = function (key, value, options) {
+    // key and value given, set cookie...
+    if (arguments.length > 1 && (value === null || typeof value !== "object")) {
+        options = jQuery.extend({}, options);
+
+        if (value === null) {
+            options.expires = -1;
+        }
+
+        if (typeof options.expires === 'number') {
+            var days = options.expires, t = options.expires = new Date();
+            t.setDate(t.getDate() + days);
+        }
+
+        return (document.cookie = [
+            encodeURIComponent(key), '=',
+            options.raw ? String(value) : encodeURIComponent(String(value)),
+            options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+            options.path ? '; path=' + options.path : '',
+            options.domain ? '; domain=' + options.domain : '',
+            options.secure ? '; secure' : ''
+        ].join(''));
+    }
+
+    // key and possibly options given, get cookie...
+    options = value || {};
+    var result, decode = options.raw ? function (s) { return s; } : decodeURIComponent;
+    return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null;
+};
+/*===============================
+4. PLugins - end
 ===============================*/
 

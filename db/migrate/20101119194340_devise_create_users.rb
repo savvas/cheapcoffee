@@ -18,7 +18,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       # facebook data
       t.string :facebook_link
-      t.string :facebook_access_token, :length => 85
+      t.string :facebook_access_token, :length => 95
       t.integer :facebook_uid, :length => 30
       t.string :name
       t.string :gender
