@@ -17,7 +17,8 @@ class CafeteriasController < ApplicationController
     @existing = Cafeteria.within(0.25, :origin => current_user)
     # reverse geocode
     geostr = "#{current_user.lat},#{current_user.lng}"
-
+    # use Facebook places
+    # https://graph.facebook.com/search?q=coffee&type=place&center=37.76,122.427&distance=1000
     @cafeteria = Cafeteria.new
     begin
         res = Rails.cache.fetch(geostr){ Geokit::Geocoders::GoogleGeocoder.reverse_geocode(geostr) }

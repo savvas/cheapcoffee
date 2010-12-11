@@ -18,10 +18,7 @@ var opts = {
         geoCode: 'http://maps.googleapis.com/maps/api/geocode/json'
     }
 };
-var setLoc = 0,
-    cur_lat = null,
-    cur_lng = null,
-    cur_address = null,
+var cur_address = null,
     infowindow = null;
 //Global map object, holds all settings related to the google map thingy
 var mapObj = {
@@ -33,6 +30,12 @@ var mapObj = {
          zoom: 16,
          center: new google.maps.LatLng(37.974290,23.730396), // Syntagma Square as default
          mapTypeId: google.maps.MapTypeId.ROADMAP
+     },
+     create: function(){
+         this.map = new google.maps.Map($('#map')[0], this.initOptions);
+         google.maps.event.addListener(this.map, 'tilesloaded', function() {
+            _setCurrentLocationAndFetchResults($.cookie('c_lat'));
+         });
      }
 };
 
@@ -47,24 +50,11 @@ var mapObj = {
 ===============================*/
 
 $(document).ready(function(){
-
-    // if we know where we are :)
-    if ($.cookie('c_lat')) {
-       mapObj.initOptions.center = new google.maps.LatLng(parseFloat($.cookie('c_lat')),parseFloat($.cookie('c_lng')));
-    }
+    // Discover location
+    _setUserLocationAndCreateMap();
 
     //Cancel click on ajax links
     $('a[href=#]').click(function(){ return false; });
-
-    //On load initialize google maps
-    initializeGMaps();
-
-    map = mapObj.map;
-
-    google.maps.event.addListener(mapObj.map, 'tilesloaded', function() {
-      _setCurrentLocationAndFetchResults(false);
-    });
-
     //Toggle 'add cafeteria' form
     $('a.add-button, a.close').click(function(){
         if ($(this).hasClass('close')){
@@ -72,7 +62,7 @@ $(document).ready(function(){
         } else {
            $.ajax({
               url:'/cafeterias/reverse_geocode',
-              data: { pair: cur_lat+','+cur_lng },
+              data: { pair: $.cookie('c_lat')+','+$.cookie('c_lng') },
               success: function(data){
                 address = data.split("*");
                 if (address[0]) $('#coffeeShopAddr').val(address[0]);
@@ -99,7 +89,7 @@ $(document).ready(function(){
     $('p.submit input', 'div.add-coffeeshop').click(_submitCoffeeForm);
 
     // Focus map on list
-    $("table.cheap-list tr a").live('click',_changeFocus(event));
+    //$("table.cheap-list tr a").live('click',_changeFocus(event));
 });
 /*===============================
 2. Jquery Event Binding - end
@@ -169,58 +159,56 @@ function _search(){
    return false;
 }
 
-//Google maps initialization function
-function initializeGMaps(){
-    mapObj.map = new google.maps.Map($('#map')[0], mapObj.initOptions);
-    //Retrieve user's location
-    _setUserLocation();
-}
 
-
-function _setUserLocation(){
+function _setUserLocationAndCreateMap(){
     var location;
     // we know already where the user is
     if ( $.cookie('c_lat') ) {
-       return true;//location = new google.maps.LatLng(parseFloat($.cookie('c_lat')), parseFloat($.cookie('c_lng')));
+       _create_map(null,null);
     // Try W3C Geolocation (Preferred)
     } else if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            location = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-            $.cookie('c_lat',position.coords.latitude);
-            $.cookie('c_lng',position.coords.longitude);
+            _create_map(position.latitude,position.longitude);
         });
     // Try Google Gears Geolocation
     } else if (google.gears) {
         var geo = google.gears.factory.create('beta.geolocation');
         geo.getCurrentPosition(function(position) {
-            location = new google.maps.LatLng(position.latitude,position.longitude);
-            $.cookie('c_lat',position.coords.latitude);
-            $.cookie('c_lng',position.coords.longitude);
+            _create_map(position.latitude,position.longitude);
         });
     } else {
        // Browser doesn't support Geolocation, set Athens as center
        // other location detection
        // the backend will create a cookie with lan/lng from the geocoded IP of the user
+       _create_map(null,null);
     }
-    mapObj.map.setCenter(location);
-    mapObj.map.setZoom(14);
+
+    return true;
+}
+function _create_map(lat,lng){
+    if ($.cookie('c_lat')){
+        mapObj.initOptions.center = new google.maps.LatLng(parseFloat($.cookie('c_lat')),parseFloat($.cookie('c_lng')));
+        mapObj.initOptions.zoom = 15;
+    } else if (lat){
+        $.cookie('c_lat',lat);
+        $.cookie('c_lng',lng);
+    }
+    mapObj.create();
 }
 
 function _setCurrentLocationAndFetchResults(detect_location) {
    ne = mapObj.map.getBounds().getNorthEast();
    sw = mapObj.map.getBounds().getSouthWest();
    c = mapObj.map.getCenter();
-   cur_lat = c.lat();
-   cur_lng = c.lng();
    ajax_url = '/search.json?sw_lat='+sw.lat()+'&sw_lng='+sw.lng()+'&ne_lat='+ne.lat()+
               '&ne_lng='+ne.lng();
    // we announce the center of the map only when we know that this is where the user is!
    // this happens on first load
-   if (detect_location){ alert('send user location');
-      ajax_url += '&c_lat='+c.lat()+'&c_lng='+c.lng();
+   if (detect_location){
+      ajax_url += '&c_lat='+$.cookie('c_lat')+'&c_lng='+$.cookie('c_lng');
    }
    $.getJSON(ajax_url, function(data){
-      show_cafeterias_on_map(map, data);
+      show_cafeterias_on_map(mapObj.map, data);
    });
 }
 
