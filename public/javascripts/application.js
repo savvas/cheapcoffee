@@ -30,7 +30,7 @@ var mapObj = {
          navigationControl: true,
          mapTypeControl: false,
          scaleControl: false,
-         zoom: 15,
+         zoom: 16,
          center: new google.maps.LatLng(37.974290,23.730396), // Syntagma Square as default
          mapTypeId: google.maps.MapTypeId.ROADMAP
      }
@@ -47,12 +47,12 @@ var mapObj = {
 ===============================*/
 
 $(document).ready(function(){
-   
+
     // if we know where we are :)
     if ($.cookie('c_lat')) {
        mapObj.initOptions.center = new google.maps.LatLng(parseFloat($.cookie('c_lat')),parseFloat($.cookie('c_lng')));
     }
-    
+
     //Cancel click on ajax links
     $('a[href=#]').click(function(){ return false; });
 
@@ -71,8 +71,8 @@ $(document).ready(function(){
             _hideAddCoffeeShopForm();
         } else {
            $.ajax({
-              url:'/cafeterias/reverse_geocode', 
-              data: { pair: cur_lat+','+cur_lng }, 
+              url:'/cafeterias/reverse_geocode',
+              data: { pair: cur_lat+','+cur_lng },
               success: function(data){
                 address = data.split("*");
                 if (address[0]) $('#coffeeShopAddr').val(address[0]);
@@ -87,6 +87,9 @@ $(document).ready(function(){
     //Change list
     $('a','p.tabs').click(_changeList);
 
+    //reset search
+    $('#search-field').click(function(){ $(this).val(''); })
+
     //Form inputs reset fields
     $('input[type=text]', 'div.add-coffeeshop')
     .focus(_focusFields)
@@ -94,7 +97,7 @@ $(document).ready(function(){
 
     //Submit 'add cafeteria' form
     $('p.submit input', 'div.add-coffeeshop').click(_submitCoffeeForm);
-    
+
     // Focus map on list
     $("table.cheap-list tr a").live('click',_changeFocus(event));
 });
@@ -147,17 +150,17 @@ function _changeFocus(event){
    return false;
 }
 
-// Search 
+// Search
 function _search(){
    $.ajax({
       url: '/cafeterias/geocode',
-      data: {search: $('#search').val()},
+      data: {search: $('#search-field').val()},
       success: function(data){
          pair = data.split(',');
          if (pair[0]){
             loc = new google.maps.LatLng(pair[0],pair[1]);
-            mapObj.map.setCenter(loc); 
-            _setCurrentLocationAndFetchResults(false);      
+            mapObj.map.setCenter(loc);
+            _setCurrentLocationAndFetchResults(false);
          } else {
             alert("No results found");
          }
@@ -167,28 +170,32 @@ function _search(){
 }
 
 //Google maps initialization function
-function initializeGMaps(){ 
+function initializeGMaps(){
     mapObj.map = new google.maps.Map($('#map')[0], mapObj.initOptions);
     //Retrieve user's location
-    _setUserLocation(); 
+    _setUserLocation();
 }
 
 
 function _setUserLocation(){
     var location;
     // we know already where the user is
-    if ( $.cookie('c_lat') ) { 
-       location = new google.maps.LatLng(parseFloat($.cookie('c_lat')), parseFloat($.cookie('c_lng')));
+    if ( $.cookie('c_lat') ) {
+       return true;//location = new google.maps.LatLng(parseFloat($.cookie('c_lat')), parseFloat($.cookie('c_lng')));
     // Try W3C Geolocation (Preferred)
     } else if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             location = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            $.cookie('c_lat',position.coords.latitude);
+            $.cookie('c_lng',position.coords.longitude);
         });
     // Try Google Gears Geolocation
     } else if (google.gears) {
         var geo = google.gears.factory.create('beta.geolocation');
         geo.getCurrentPosition(function(position) {
             location = new google.maps.LatLng(position.latitude,position.longitude);
+            $.cookie('c_lat',position.coords.latitude);
+            $.cookie('c_lng',position.coords.longitude);
         });
     } else {
        // Browser doesn't support Geolocation, set Athens as center

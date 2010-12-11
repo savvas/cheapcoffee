@@ -9,6 +9,7 @@ gem 'oauth2', :git => 'http://github.com/intridea/oauth2.git'
 gem 'devise_openid_authenticatable'
 gem 'geokit-rails3' #https://github.com/jlecour/geokit-rails3
 gem 'hoptoad_notifier'
+gem 'escape_utils'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -17,3 +18,4 @@ group :development do
   gem 'mysql', '2.8.1'
   gem 'mongrel', '>= 1.2.0.pre2'
 end
+

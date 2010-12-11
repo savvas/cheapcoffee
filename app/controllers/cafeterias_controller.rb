@@ -106,7 +106,7 @@ class CafeteriasController < ApplicationController
                                        "WHERE cafeteria_id=#{@cafeteria.id} AND product='#{@product}'" +
                                        " GROUP BY price ORDER BY freq DESC LIMIT 3")
   end
-  
+
   def reverse_geocode
     res = Rails.cache.fetch(params[:pair]){ Geokit::Geocoders::GoogleGeocoder.reverse_geocode(params[:pair]) }
     render :text => "#{res.street_address} * #{res.city}"
@@ -115,6 +115,8 @@ class CafeteriasController < ApplicationController
   end
 
   def geocode
+puts "====================================="
+puts params[:search]
     loc = Rails.cache.fetch(params[:search]){ Geokit::Geocoders::Geocoder.google_geocoder("#{params[:search]}") }
     render :text => "#{loc.lat},#{loc.lng}"
   rescue
@@ -138,7 +140,7 @@ class CafeteriasController < ApplicationController
     product = params[:product] || "price_1" # change from params search
     cafeterias = cafeterias.order("#{product} ASC")
     cafeterias = cafeterias.limit(20)
-    
+
     # create a hash
     @cafeterias = cafeterias.collect do |c|
        {'cafeteria'=>{ 'id'=>c.id, 'name'=>c.name, 'address'=>c.address,'price_1'=>c.price_1,
@@ -152,7 +154,7 @@ class CafeteriasController < ApplicationController
   def _update_current_user_location_session!
     # if there is no session and no params
     if session[:c_lat].blank? && params[:c_lat].blank?
-      current_ip = current_user ? current_user.current_sign_in_ip : request.remote_ip 
+      current_ip = current_user ? current_user.current_sign_in_ip : request.remote_ip
       loc = Geokit::Geocoders::MultiGeocoder.geocode(current_ip)
       if loc
         session[:c_lat], session[:c_lng] = loc.lat, loc.lng
