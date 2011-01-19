@@ -22,21 +22,31 @@ var cur_address = null,
     infowindow = null;
 //Global map object, holds all settings related to the google map thingy
 var mapObj = {
-     map: new Object(),
-     initOptions: {
+  map: new Object(),
+  initOptions: {
          navigationControl: true,
          mapTypeControl: false,
          scaleControl: false,
          zoom: 16,
          center: new google.maps.LatLng(37.974290,23.730396), // Syntagma Square as default
          mapTypeId: google.maps.MapTypeId.ROADMAP
-     },
-     create: function(){
+  },
+  create: function(){
          this.map = new google.maps.Map($('#map')[0], this.initOptions);
+         // add an icon for you
+         if ($.cookie('geolocate')){
+            var marker = new google.maps.Marker({
+                 position: new google.maps.LatLng(parseFloat($.cookie('c_lat')),parseFloat($.cookie('c_lng'))),
+                 title: "Me",
+                 icon: $.cookie('pic_square')
+            });
+            marker.setMap(mapObj.map);
+         }        
+         // attach event when tiles load
          google.maps.event.addListener(this.map, 'tilesloaded', function() {
             _setCurrentLocationAndFetchResults($.cookie('c_lat'));
-         });
-     }
+         });      
+  }
 };
 
 /*===============================
@@ -51,7 +61,13 @@ var mapObj = {
 
 $(document).ready(function(){
     // Discover location
-    _setUserLocationAndCreateMap();
+    // Discover location and create map
+    if ($.cookie('c_lat')){
+       _setUserLocationAndCreateMap();
+    } else {
+       mapObj.create();
+       _setUserLocationAndCreateMap();
+    }    
 
     //Cancel click on ajax links
     $('a[href=#]').click(function(){ return false; });
@@ -161,20 +177,32 @@ function _search(){
 
 
 function _setUserLocationAndCreateMap(){
-    var location;
+    function _create_map(lat,lng){
+        if ($.cookie('c_lat')){
+            mapObj.initOptions.center = new google.maps.LatLng(parseFloat($.cookie('c_lat')),parseFloat($.cookie('c_lng')));
+            mapObj.initOptions.zoom = 15;
+        } else if (lat){
+            $.cookie('c_lat',lat);
+            $.cookie('c_lng',lng);
+            mapObj.initOptions.center = new google.maps.LatLng(parseFloat($.cookie('c_lat')),parseFloat($.cookie('c_lng')));
+        }
+        mapObj.create();
+    }
     // we know already where the user is
     if ( $.cookie('c_lat') ) {
        _create_map(null,null);
     // Try W3C Geolocation (Preferred)
     } else if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            _create_map(position.latitude,position.longitude);
+           $.cookie('geolocate',true);
+           _create_map(position.coords.latitude,position.coords.longitude);
         });
     // Try Google Gears Geolocation
     } else if (google.gears) {
         var geo = google.gears.factory.create('beta.geolocation');
         geo.getCurrentPosition(function(position) {
-            _create_map(position.latitude,position.longitude);
+           $.cookie('geolocate',true);
+           _create_map(position.coords.latitude,position.coords.longitude);
         });
     } else {
        // Browser doesn't support Geolocation, set Athens as center
@@ -182,18 +210,6 @@ function _setUserLocationAndCreateMap(){
        // the backend will create a cookie with lan/lng from the geocoded IP of the user
        _create_map(null,null);
     }
-
-    return true;
-}
-function _create_map(lat,lng){
-    if ($.cookie('c_lat')){
-        mapObj.initOptions.center = new google.maps.LatLng(parseFloat($.cookie('c_lat')),parseFloat($.cookie('c_lng')));
-        mapObj.initOptions.zoom = 15;
-    } else if (lat){
-        $.cookie('c_lat',lat);
-        $.cookie('c_lng',lng);
-    }
-    mapObj.create();
 }
 
 function _setCurrentLocationAndFetchResults(detect_location) {

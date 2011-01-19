@@ -1,4 +1,5 @@
-# encoding: utf-8
+require 'activesupport'
+$KCODE = 'u'
 
 class String
   # Converts the Greek Unicode characters contained in the string

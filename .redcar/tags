@@ -1,0 +1,109 @@
+1295459838
+APP_ID	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/config.rb	  APP_ID =
+ActionController	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	    module ActionController
+ActionView	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	    module ActionView
+Adapter	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/faraday_overload.rb	      class Adapter
+Application	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/application.rb	  class Application 
+ApplicationController	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/application_controller.rb	class ApplicationController 
+ApplicationHelper	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/helpers/application_helper.rb	module ApplicationHelper
+BrowsingTest	/home/panosjee/Documents/Work/Rails/cheapcoffee/test/performance/browsing_test.rb	class BrowsingTest 
+COFFEES	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/coffees.rb	COFFEES =
+CONFIG	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/config.rb	  CONFIG =
+Cafeteria	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/cafeteria.rb	class Cafeteria 
+CafeteriaTest	/home/panosjee/Documents/Work/Rails/cheapcoffee/test/unit/cafeteria_test.rb	class CafeteriaTest 
+CafeteriasController	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	class CafeteriasController 
+CafeteriasControllerTest	/home/panosjee/Documents/Work/Rails/cheapcoffee/test/functional/cafeterias_controller_test.rb	class CafeteriasControllerTest 
+CafeteriasHelper	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/helpers/cafeterias_helper.rb	module CafeteriasHelper
+CafeteriasHelperTest	/home/panosjee/Documents/Work/Rails/cheapcoffee/test/unit/helpers/cafeterias_helper_test.rb	class CafeteriasHelperTest 
+Cheapcoffee	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/application.rb	module Cheapcoffee
+CreateCafeterias	/home/panosjee/Documents/Work/Rails/cheapcoffee/db/migrate/20101119220641_create_cafeterias.rb	class CreateCafeterias 
+CreateSuggestedPrices	/home/panosjee/Documents/Work/Rails/cheapcoffee/db/migrate/20101120134657_create_suggested_prices.rb	class CreateSuggestedPrices 
+DeviseCreateUsers	/home/panosjee/Documents/Work/Rails/cheapcoffee/db/migrate/20101119194340_devise_create_users.rb	class DeviseCreateUsers 
+Facebook	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/config.rb	module Facebook
+Faraday	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/faraday_overload.rb	    module Faraday
+J	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function J(){return(new Date).getTime()}function Y(){return false}function Z(){return true}function na(a,b,d){d[0].type=a;return c.event.handle.apply(b,d)}function oa(a){var b,d=[],f=[],e=arguments,j,i,o,k,n,r;i=c.data(this,"events");if(!(a.liveFired===this||!i||!i.live||a.button&&a.type==="click")){a.liveFired=this;var u=i.live.slice(0);for(k=0;k<u.length;k++){i=u[k];i.origType.replace(O,"")===a.type?f.push(i.selector):u.splice(k--,1)}j=c(a.target).closest(f,a.currentTarget)
+K	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function K(a,b){var d={};c.each(va.concat.apply([],va.slice(0,b)),function(){d[this]=a});return d}function wa(a){return"scrollTo"in a&&a.document?a:a.nodeType===9?a.defaultView||a.parentWindow:false}var c=function(a,b){return new c.fn.init(a,b)},Ra=A.jQuery,Sa=A.$,s=A.document,T,Ta=/^[^<]*(<[\w\W]+>)[^>]*$|^#([\w-]+)
+NetHttp	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/faraday_overload.rb	        class NetHttp 
+PagesController	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/pages_controller.rb	class PagesController 
+Poi	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/poi.rb	class Poi 
+Qa	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function Qa(a,b){b.src?c.ajax({url:b.src,async:false,dataType:"script"}):c.globalEval(b.text||b.textContent||b.innerHTML||"");b.parentNode&&b.parentNode.removeChild(b)}function X(a,b,d,f,e,j){var i=a.length;if(typeof b==="object"){for(var o in b)X(a,o,b[o],f,e,d);return a}if(d!==w){f=!j&&f&&c.isFunction(d);for(o=0;o<i;o++)e(a[o],b,f?d.call(a[o],o,e(a[o],b)):d,j)
+ROLES	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/user.rb	  ROLES =
+Rack	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	    module Rack
+Renderable	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	      module Renderable 
+Request	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	      class Request
+Result	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	    class Mysql::Result
+SECRET	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/config.rb	  SECRET =
+String	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	        String =
+String	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/string.rb	class String
+SuggestedPrice	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/suggested_price.rb	class SuggestedPrice 
+SuggestedPriceTest	/home/panosjee/Documents/Work/Rails/cheapcoffee/test/unit/suggested_price_test.rb	class SuggestedPriceTest 
+SuggestedPricesController	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/suggested_prices_controller.rb	class SuggestedPricesController 
+TestCase	/home/panosjee/Documents/Work/Rails/cheapcoffee/test/test_helper.rb	class ActiveSupport::TestCase
+User	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/user.rb	class User 
+UserTest	/home/panosjee/Documents/Work/Rails/cheapcoffee/test/unit/user_test.rb	class UserTest 
+Utils	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	      module Utils
+_update_current_user_location_session!	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def _update_current_user_location_session!
+a	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function a(g){for(var h="",l,m=0;g[m];m++){l=g[m];if(l.nodeType===3||l.nodeType===4)h+=l.nodeValue;else if(l.nodeType!==8)h+=a(l.childNodes)}return h}function b(g,h,l,m,q,p){q=0;for(var v=m.length;q<v;q++)
+about	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/pages_controller.rb	  def about
+add_facebook_data!	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/user.rb	  def add_facebook_data!(data,access_token)
+approve	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def approve
+approved	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/cafeteria.rb	  attr_accessor :approved, :voter_id, :slat, :slng, :dist, :telephone, :website
+approved?	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/cafeteria.rb	  def approved?
+b	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function b()
+blame	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def blame
+call	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/faraday_overload.rb	          def call(env)
+compile!	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	        def compile!(render_symbol, local_assigns)
+contact	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/pages_controller.rb	  def contact
+create	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def create
+create	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/suggested_prices_controller.rb	  def create
+d	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function d(){e.complete&&e.complete.call(k,x,i);e.global&&f("ajaxComplete",[x,e]);e.global&&!--c.active&&c.event.trigger("ajaxStop")}function f(q,p){(e.context?c(e.context):c.event).trigger(q,p)}var e=c.extend(true,{},c.ajaxSettings,a),j,i,o,k=a&&a.context||e,n=e.type.toUpperCase();if(e.data&&e.processData&&typeof e.data!=="string")e.data=c.param(e.data,e.traditional);if(e.dataType==="jsonp"){if(n==="GET")N.test(e.url)||(e.url+=(ka.test(e.url)
+d	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function d(f){f=c.event.fix(f);f.type=b;return c.event.handle.call(this,f)}c.event.special[b]={setup:function()
+d	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function d(g,h,l,m,q,p){q=0;for(var v=m.length;q<v;q++){var t=m[q];if(t){t=t[g];for(var y=false;t;){if(t.sizcache===l){y=m[t.sizset];break}if(t.nodeType===1){if(!p){t.sizcache=l;t.sizset=q}if(typeof h!=="string"){if(t===h){y=true;break}}else if(k.filter(h,[t]).length>0){y=t;break}}t=t[g]}m[q]=y}}}var f=/((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^[\]]*\]|['"][^'"]*['"]|[^[\]'"]+)+\]|\\.|[^ >+~,(\[\\]+)+|[>+~])(\s*,\s*)?((?:.|\r|\n)*)
+d	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function d(i,o){if(c.isArray(o))c.each(o,function(k,n){b||/\[\]$/.test(i)?f(i,n):d(i+"["+(typeof n==="object"||c.isArray(n)?k:"")+"]",n)});else!b&&o!=null&&typeof o==="object"?c.each(o,function(k,n){d(i+"["+k+"]",n)}):f(i,o)}function f(i,o){o=c.isFunction(o)?o():o;e[e.length]=encodeURIComponent(i)+"="+encodeURIComponent(o)}var e=[];if(b===w)
+destroy	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def destroy
+dist	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/cafeteria.rb	  attr_accessor :approved, :voter_id, :slat, :slng, :dist, :telephone, :website
+down	/home/panosjee/Documents/Work/Rails/cheapcoffee/db/migrate/20101119194340_devise_create_users.rb	  def self.down
+down	/home/panosjee/Documents/Work/Rails/cheapcoffee/db/migrate/20101119220641_create_cafeterias.rb	  def self.down
+down	/home/panosjee/Documents/Work/Rails/cheapcoffee/db/migrate/20101120134657_create_suggested_prices.rb	  def self.down
+each_hash_utf8	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	      def each_hash_utf8(&block)
+each_utf8	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	      def each_utf8(&block)
+edit	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def edit
+encode	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	      def encode(value, encoding = "utf-8")
+escape	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	        def escape(s)
+f	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function f(j){return e.step(j)}this.startTime=J()
+f	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function f(u){return c.nodeName(u,"table")?u.getElementsByTagName("tbody")
+faq	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/pages_controller.rb	  def faq
+find_for_facebook_oauth	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/user.rb	  def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
+geocode	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def geocode
+geocode!	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/cafeteria.rb	  def geocode!
+geocode_me!	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/user.rb	  def geocode_me!
+greeklish	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/string.rb	  def greeklish
+greeklish!	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/string.rb	  def greeklish!
+i	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function i(){e=b==="width"?a.offsetWidth:a.offsetHeight;f!=="border"&&c.each(j,function(){f||(e-=parseFloat(c.curCSS(a,"padding"+this,true))||0);if(f==="margin")e+=parseFloat(c.curCSS(a,"margin"+this,true))
+index	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def index; 
+k	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function k()
+ma	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function ma(){if(!c.isReady){try{s.documentElement.doScroll("left")}catch(a){setTimeout(ma,1);return}c.ready()}}function Qa(a,b){b.src?c.ajax({url:b.src,async:false,dataType:"script"}):c.globalEval(b.text||b.textContent||b.innerHTML||"");b.parentNode&&b.parentNode.removeChild(b)}function X(a,b,d,f,e,j){var i=a.length;if(typeof b==="object"){for(var o in b)X(a,o,b[o],f,e,d);return a}if(d!==w){f=!j&&f&&c.isFunction(d);for(o=0;o<i;o++)e(a[o],b,f?d.call(a[o],o,e(a[o],b)):d,j)
+na	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function na(a,b,d){d[0].type=a;return c.event.handle.apply(b,d)}function oa(a){var b,d=[],f=[],e=arguments,j,i,o,k,n,r;i=c.data(this,"events");if(!(a.liveFired===this||!i||!i.live||a.button&&a.type==="click")){a.liveFired=this;var u=i.live.slice(0);for(k=0;k<u.length;k++){i=u[k];i.origType.replace(O,"")===a.type?f.push(i.selector):u.splice(k--,1)}j=c(a.target).closest(f,a.currentTarget)
+net_http_class	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/faraday_overload.rb	          def net_http_class(env)
+new	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def new
+normalize_parameters	/home/panosjee/Documents/Work/Rails/cheapcoffee/config/initializers/encodings.rb	          def normalize_parameters(value)
+pa	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function pa(a,b){return"live."+(a&&a!=="*"?a+".":"")+b.replace(/\./g,"`")
+qa	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function qa(a){return!a||!a.parentNode||a.parentNode.nodeType===11}function ra(a,b){var d=0;b.each(function(){if(this.nodeName===(a[d]&&a[d].nodeName)){var f=c.data(a[d++]),e=c.data(this,f);if(f=f&&f.events){delete e.handle;e.events={};for(var j in f)for(var i in f[j])c.event.add(this,j,f[j][i],f[j][i].data)}}})}function sa(a,b,d){var f,e,j;b=b&&b[0]?b[0].ownerDocument||b[0]:s;if(a.length===1&&typeof a[0]==="string"&&a[0].length<512&&b===s&&!ta.test(a[0])&&(c.support.checkClone||!ua.test(a[0])))
+reverse_geocode	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def reverse_geocode
+roles=	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/user.rb	  def roles=(roles)
+search	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def search
+show	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def show
+show_cafeterias_on_map	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/application.js	function show_cafeterias_on_map(map, data)
+slat	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/cafeteria.rb	  attr_accessor :approved, :voter_id, :slat, :slng, :dist, :telephone, :website
+slng	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/cafeteria.rb	  attr_accessor :approved, :voter_id, :slat, :slng, :dist, :telephone, :website
+telephone	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/cafeteria.rb	  attr_accessor :approved, :voter_id, :slat, :slng, :dist, :telephone, :website
+test_homepage	/home/panosjee/Documents/Work/Rails/cheapcoffee/test/performance/browsing_test.rb	  def test_homepage
+up	/home/panosjee/Documents/Work/Rails/cheapcoffee/db/migrate/20101119194340_devise_create_users.rb	  def self.up
+up	/home/panosjee/Documents/Work/Rails/cheapcoffee/db/migrate/20101119220641_create_cafeterias.rb	  def self.up
+up	/home/panosjee/Documents/Work/Rails/cheapcoffee/db/migrate/20101120134657_create_suggested_prices.rb	  def self.up
+update	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/controllers/cafeterias_controller.rb	  def update
+update_cafeteria	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/suggested_price.rb	    def update_cafeteria
+voted_already?	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/cafeteria.rb	  def voted_already?
+voter_id	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/cafeteria.rb	  attr_accessor :approved, :voter_id, :slat, :slng, :dist, :telephone, :website
+wa	/home/panosjee/Documents/Work/Rails/cheapcoffee/public/javascripts/jquery.min.js	function wa(a){return"scrollTo"in a&&a.document?a:a.nodeType===9?a.defaultView||a.parentWindow:false}var c=function(a,b){return new c.fn.init(a,b)},Ra=A.jQuery,Sa=A.$,s=A.document,T,Ta=/^[^<]*(<[\w\W]+>)[^>]*$|^#([\w-]+)
+website	/home/panosjee/Documents/Work/Rails/cheapcoffee/app/models/cafeteria.rb	  attr_accessor :approved, :voter_id, :slat, :slng, :dist, :telephone, :website
