@@ -368,6 +368,6 @@ jQuery.cookie = function (key, value, options) {
     return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null;
 };
 /*===============================
-4. PLugins - end
+4. Plugins - end
 ===============================*/
 
